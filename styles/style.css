@@ -106,11 +106,11 @@ ul#menu ul a {
     color: #fff;
     padding: 10px;
     border-radius: 15px;
-    transition: transform 0.3s; /* Aggiungi una transizione per un effetto fluido */
+    transition: transform 0.3s;
 }
 
 #boxs:hover,#boxd:hover {
-    transform: scale(1.06); /* Ingrandisci del 6% quando si passa sopra con il cursore */
+    transform: scale(1.06);
 }
 
 #boxs {

@@ -218,10 +218,7 @@ button:hover {
 
 /*RESPONSIVE */
 @media only screen and (max-width: 1700px) {
-    #perres {
-    width: 250%;
-    height: 250%; 
-    }
+
     nav ul li {
         display: block;
         padding: 10px 0;

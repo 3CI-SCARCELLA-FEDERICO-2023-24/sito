@@ -218,12 +218,18 @@ button:hover {
 
 /*RESPONSIVE */
 @media only screen and (max-width: 1700px) {
-    #titolo {
-        font-size: 24px;
+ #titolo {
+        font-size: 28px;
     }
 
     .box {
-        scale: 1,3;
+        width: 90%;
+        margin: 5% auto;
+        padding: 20px;
+    }
+
+    .box p {
+        font-size: 16px;
     }
 
     footer {

@@ -217,7 +217,7 @@ button:hover {
 }
 
 /*RESPONSIVE */
-@media only screen and (max-width: 1700px) {
+@media only screen and (max-width: 1600px) {
  #titolo {
         font-size: 28px;
     }
@@ -228,6 +228,9 @@ button:hover {
 
     footer {
         margin-top: 10%;
+    }
+    nav{
+        margin:10%
     }
     nav ul li {
         display: block;

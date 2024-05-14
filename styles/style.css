@@ -1,0 +1,251 @@
+/* Stili di base */
+body {
+    background-image: url("../media/sfondo-home.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    margin: 0;
+    border: 0;
+}
+
+#sfondo-overlay {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+#titolo{
+    background-color: gray;
+    text-align: center;
+    color: white;
+    padding: 5px;
+    margin: 0;
+    border: 0;
+    border-bottom: solid 3px;
+    border-color: darkgray;
+}
+
+#link {
+    text-decoration: none;
+    color: white;
+}
+
+#link:hover {
+    color: rgb(150, 150, 153);
+}
+
+/* Nav bar*/
+nav {
+    background-color: gray;
+    text-align: center;
+    border: 0;
+    padding: 0;
+    top: 0;
+    position: sticky;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    border: 0;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline-block;
+    padding: 10px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+}
+
+nav ul li:hover {
+    color: white;
+    background-color: #555555;
+}
+
+/* menu a tendina */
+ul#menu li a:hover {
+    color: #fff
+}
+
+ul#menu ul {
+    visibility: hidden;
+    background-color: #666;
+    position: absolute;
+    top: 38px;
+    right: 40%;
+    left: 40%;
+    text-align: center;
+}
+
+ul#menu li:hover ul {
+    visibility: visible;
+    text-align: center;
+}
+
+ul#menu ul li {
+    display: block;
+    text-align: center;
+}
+
+ul#menu ul a {
+    padding: 30px;
+    padding: 15px;
+    color: white;
+    text-align: center;
+}
+
+/* Box */
+.box {
+    background-color: #585656;
+    text-align: center;
+    color: #fff;
+    padding: 10px;
+    border-radius: 15px;
+    transition: transform 0.3s; /* Aggiungi una transizione per un effetto fluido */
+}
+
+#boxs:hover,#boxd:hover {
+    transform: scale(1.06); /* Ingrandisci del 6% quando si passa sopra con il cursore */
+}
+
+#boxs {
+    margin-top: 5%;
+    margin-left: 8%;
+    margin-right: 55%;
+}
+
+#boxd {
+    margin-top: 5%;
+    margin-left: 55%;
+    margin-right: 8%;
+}
+
+/* Footer */
+footer {
+    margin-top: 15%;
+    text-align: center;
+    padding: 5px;
+    background-color: #222222;
+    color: #abbaba;
+    padding-bottom: 15%;
+}
+
+/* pagine dei compagni*/
+#italia-esportatore-armi,#riflessione-costituzione {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#italia-esportatore-armi h3,#riflessione-costituzione h3 {
+    color: #333;
+}
+
+#italia-esportatore-armi p,#riflessione-costituzione p {
+    line-height: 1.6;
+}
+
+#italia-esportatore-armi ul,#riflessione-costituzione ul {
+    list-style-type: square;
+}
+
+#italia-esportatore-armi a,#riflessione-costituzione a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+#italia-esportatore-armi a:hover,#riflessione-costituzione a:hover {
+    text-decoration: underline;
+}
+
+/* Contatti */
+.container-c,.container {
+    width: 80%;
+    margin: auto;
+    background-color: #666;
+    padding: 15px;
+    margin-top: 80px;
+    border-radius: 15px;
+}
+
+.container-c {
+    color: white;
+}
+
+.container {
+    color: rgb(0, 0, 0);
+}
+
+form {
+    margin-top: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+/*RESPONSIVE */
+@media only screen and (max-width: 720px) {
+
+    nav ul li {
+        display: block;
+        padding: 10px 0;
+    }
+
+    nav ul li:hover {
+        background-color: transparent;
+    }
+
+    nav ul li:hover ul {
+        top: 38px; 
+        left: 0;
+        right: 0;
+    }
+
+    ul#menu ul {
+        top: 38px;
+        right: 0;
+        left: 0;
+    }
+
+    ul#menu ul a {
+        padding: 15px;
+    }
+
+    #boxs,#boxd {
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+}

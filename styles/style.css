@@ -224,6 +224,10 @@ button:hover {
 
     .box {
         scale:1,8;
+        
+    }
+    .boxs,.boxd{
+        padding-bottom: 10px;
     }
 
     footer {

@@ -257,11 +257,11 @@ button:hover {
     }
 
     .box {
-        scale: 1.1;
+        scale: 0.9;
     }
 
     .boxs, .boxd {
-        padding-bottom: 10px;
+        padding-bottom: 30px;
     }
 
     footer {

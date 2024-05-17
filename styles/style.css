@@ -44,6 +44,7 @@ nav {
     padding: 0;
     top: 0;
     position: sticky;
+    display: inline-block;
 }
 #password-container{
     display: inline-block;

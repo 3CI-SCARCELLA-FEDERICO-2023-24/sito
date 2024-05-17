@@ -46,6 +46,7 @@ nav {
     position: sticky;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 nav ul {

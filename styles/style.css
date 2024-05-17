@@ -71,7 +71,7 @@ nav ul li:hover {
 
 /* menu a tendina */
 ul#menu li a:hover {
-    color: #fff
+    color: #fff;
 }
 
 ul#menu ul {
@@ -86,7 +86,7 @@ ul#menu ul {
 
 ul#menu li:hover ul {
     visibility: visible;
-    text-align: center;
+    text-align: left;
 }
 
 ul#menu ul li {

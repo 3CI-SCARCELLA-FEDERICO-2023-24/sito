@@ -45,7 +45,6 @@ nav {
     top: 0;
     position: sticky;
     display: flex;
-    justify-content: center;
     align-items: center;
 }
 
@@ -105,7 +104,7 @@ ul#menu ul a {
 
 #password-container {
     display: flex;
-    align-items: center;
+    align-items: left;
     margin-right: 20px;
 }
 

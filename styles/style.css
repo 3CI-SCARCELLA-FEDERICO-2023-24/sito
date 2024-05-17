@@ -1,4 +1,4 @@
-/* Stilo di base */
+    /* Stilo di base */
 body {
     background-image: url("../media/sfondo-home.jpg");
     background-size: cover;
@@ -45,7 +45,7 @@ nav {
     top: 0;
     position: sticky;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 

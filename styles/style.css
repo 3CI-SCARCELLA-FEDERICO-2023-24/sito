@@ -109,9 +109,9 @@ ul#menu ul a {
 
 #password-container {
     display: flex;
-    align-items: center;
+    align-items: right;
     margin-right: 20px;
-    margin-left: 200px;
+    
 }
 
 #password-container label {

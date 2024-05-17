@@ -45,6 +45,12 @@ nav {
     top: 0;
     position: sticky;
 }
+#password-container{
+    display: inline-block;
+    color: white;
+    display: flex;
+    right: 400px;
+}
 
 nav ul {
     list-style-type: none;

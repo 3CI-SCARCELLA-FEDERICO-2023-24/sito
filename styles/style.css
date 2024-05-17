@@ -271,6 +271,7 @@ button:hover {
 
     nav {
         margin-bottom: 10%;
+        text-align: center;
     }
 
     nav ul li {
@@ -292,6 +293,7 @@ button:hover {
         top: 38px;
         right: 0;
         left: 0;
+        text-align: center;
     }
 
     ul#menu ul a {

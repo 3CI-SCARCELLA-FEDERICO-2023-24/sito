@@ -52,13 +52,15 @@ nav ul {
     padding: 0;
     margin: 0;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     flex-grow: 1;
+    align-items: center;
 }
 
 nav ul li {
-    display: inline-block;
     padding: 10px 20px;
+    position: relative;
 }
 
 nav ul li a {
@@ -80,26 +82,27 @@ ul#menu ul {
     visibility: hidden;
     background-color: #666;
     position: absolute;
-    top: 38px;
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
+    top: 100%;
+    left: 0;
+    text-align: left;
+    width: 100%;
+    padding: 0;
 }
 
 ul#menu li:hover ul {
     visibility: visible;
-    text-align: center;
 }
 
 ul#menu ul li {
     display: block;
-    text-align: center;
+    text-align: left;
+    width: 100%;
 }
 
 ul#menu ul a {
-    padding: 15px;
+    padding: 10px;
     color: white;
-    text-align: center;
+    display: block;
 }
 
 /* Contenitore della password */
@@ -251,9 +254,13 @@ button:hover {
 }
 
 /* Responsive */
-@media only screen and (max-width: 1600px) {
+@media only screen and (max-width: 1000px) {
     #titolo {
         font-size: 28px;
+    }
+
+    .box {
+        scale: 1.1;
     }
 
     .boxs, .boxd {
@@ -268,19 +275,12 @@ button:hover {
         margin-bottom: 10%;
     }
 
+    nav ul {
+        flex-direction: column;
+    }
+
     nav ul li {
-        display: block;
         padding: 10px 0;
-    }
-
-    nav ul li:hover {
-        background-color: transparent;
-    }
-
-    nav ul li:hover ul {
-        top: 38px; 
-        left: 0;
-        right: 0;
     }
 
     ul#menu ul {

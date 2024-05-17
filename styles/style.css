@@ -15,7 +15,8 @@ body {
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 2;
 }
-#titolo{
+
+#titolo {
     background-color: gray;
     text-align: center;
     color: white;
@@ -35,7 +36,7 @@ body {
     color: rgb(150, 150, 153);
 }
 
-/* Nav bar*/
+/* Nav bar */
 nav {
     background-color: gray;
     text-align: center;
@@ -43,6 +44,9 @@ nav {
     padding: 0;
     top: 0;
     position: sticky;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 nav ul {
@@ -67,7 +71,7 @@ nav ul li:hover {
     background-color: #555555;
 }
 
-/* menu a tendina */
+/* Menu a tendina */
 ul#menu li a:hover {
     color: #fff
 }
@@ -99,6 +103,37 @@ ul#menu ul a {
     text-align: center;
 }
 
+#password-container {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+#password-container label {
+    margin-right: 5px;
+    color: white;
+}
+
+#password-container input {
+    padding: 5px;
+    margin-right: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#password-container button {
+    padding: 5px 10px;
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#password-container button:hover {
+    background-color: #777;
+}
+
 /* Box */
 .box {
     background-color: #585656;
@@ -109,7 +144,7 @@ ul#menu ul a {
     transition: transform 0.3s;
 }
 
-#boxs:hover,#boxd:hover {
+#boxs:hover, #boxd:hover {
     transform: scale(1.06);
 }
 
@@ -135,8 +170,8 @@ footer {
     padding-bottom: 15%;
 }
 
-/* pagine dei compagni*/
-#italia-esportatore-armi,#riflessione-costituzione {
+/* Pagine dei compagni */
+#italia-esportatore-armi, #riflessione-costituzione {
     max-width: 800px;
     margin: 20px auto;
     background-color: #fff;
@@ -145,29 +180,29 @@ footer {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-#italia-esportatore-armi h3,#riflessione-costituzione h3 {
+#italia-esportatore-armi h3, #riflessione-costituzione h3 {
     color: #333;
 }
 
-#italia-esportatore-armi p,#riflessione-costituzione p {
+#italia-esportatore-armi p, #riflessione-costituzione p {
     line-height: 1.6;
 }
 
-#italia-esportatore-armi ul,#riflessione-costituzione ul {
+#italia-esportatore-armi ul, #riflessione-costituzione ul {
     list-style-type: square;
 }
 
-#italia-esportatore-armi a,#riflessione-costituzione a {
+#italia-esportatore-armi a, #riflessione-costituzione a {
     color: #007bff;
     text-decoration: none;
 }
 
-#italia-esportatore-armi a:hover,#riflessione-costituzione a:hover {
+#italia-esportatore-armi a:hover, #riflessione-costituzione a:hover {
     text-decoration: underline;
 }
 
 /* Contatti */
-.container-c,.container {
+.container-c, .container {
     width: 80%;
     margin: auto;
     background-color: #666;
@@ -216,26 +251,28 @@ button:hover {
     background-color: #555;
 }
 
-/*RESPONSIVE */
+/* Responsive */
 @media only screen and (max-width: 1600px) {
- #titolo {
+    #titolo {
         font-size: 28px;
     }
 
     .box {
-        scale:1,8;
-        
+        scale: 1.8;
     }
-    .boxs,.boxd{
+
+    .boxs, .boxd {
         padding-bottom: 10px;
     }
 
     footer {
         margin-top: 10%;
     }
-    nav{
-        margin-bottom:10%
+
+    nav {
+        margin-bottom: 10%;
     }
+
     nav ul li {
         display: block;
         padding: 10px 0;
@@ -261,8 +298,12 @@ button:hover {
         padding: 15px;
     }
 
-    #boxs,#boxd {
+    #boxs, #boxd {
         margin-left: 5%;
         margin-right: 5%;
+    }
+
+    #password-container {
+        margin-right: 10px;
     }
 }

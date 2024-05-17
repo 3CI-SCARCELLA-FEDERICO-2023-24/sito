@@ -50,18 +50,13 @@ nav {
 nav ul {
     list-style-type: none;
     padding: 0;
+    border: 0;
     margin: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex-grow: 1;
-    align-items: center;
 }
 
 nav ul li {
-    padding: 10px 20px;
-    position: relative;
     display: inline-block;
+    padding: 10px;
 }
 
 nav ul li a {
@@ -74,36 +69,36 @@ nav ul li:hover {
     background-color: #555555;
 }
 
-/* Menu a tendina */
+/* menu a tendina */
 ul#menu li a:hover {
-    color: #fff;
+    color: #fff
 }
 
 ul#menu ul {
     visibility: hidden;
     background-color: #666;
     position: absolute;
-    top: 100%;
-    left: 0;
-    text-align: left;
-    width: 100%;
-    padding: 0;
+    top: 38px;
+    right: 40%;
+    left: 40%;
+    text-align: center;
 }
 
 ul#menu li:hover ul {
     visibility: visible;
+    text-align: center;
 }
 
 ul#menu ul li {
     display: block;
-    text-align: left;
-    width: 100%;
+    text-align: center;
 }
 
 ul#menu ul a {
-    padding: 10px;
+    padding: 30px;
+    padding: 15px;
     color: white;
-    display: block;
+    text-align: center;
 }
 
 /* Contenitore della password */

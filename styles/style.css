@@ -73,9 +73,6 @@ nav ul li:hover {
 ul#menu li a:hover {
     color: #fff;
 }
-.home{
-    align-items: left;
-}
 
 ul#menu ul {
     visibility: hidden;
@@ -90,6 +87,7 @@ ul#menu ul {
 ul#menu li:hover ul {
     visibility: visible;
     text-align: left;
+    align-items: left;
 }
 
 ul#menu ul li {

@@ -73,6 +73,9 @@ nav ul li:hover {
 ul#menu li a:hover {
     color: #fff;
 }
+.home{
+    align-items: left;
+}
 
 ul#menu ul {
     visibility: hidden;

@@ -256,10 +256,6 @@ button:hover {
         font-size: 28px;
     }
 
-    .box {
-        scale: 1.8;
-    }
-
     .boxs, .boxd {
         padding-bottom: 10px;
     }

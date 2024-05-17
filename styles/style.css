@@ -61,6 +61,7 @@ nav ul {
 nav ul li {
     padding: 10px 20px;
     position: relative;
+    display: inline-block;
 }
 
 nav ul li a {

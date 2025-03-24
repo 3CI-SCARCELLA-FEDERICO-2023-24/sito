@@ -1,119 +1,119 @@
-let level = 1;
-let balance = 5000;
+let livello = 1;
+let saldo = 5000;
 let magazzino = []; // Variabile per contenere le porte acquistate
 let venditaIncremento = 20; // Percentuale di incremento del prezzo di vendita (default 20%)
 
-const openComputerButton = document.getElementById('open-computer');
-const computerScreen = document.getElementById('computer-screen');
-const closeButton = document.getElementById('close-button');
-const levelDisplay = document.getElementById('level');
-const balanceDisplay = document.getElementById('balance');
-const showDoorsButton = document.getElementById('show-doors');
-const showWarehouseButton = document.getElementById('show-warehouse');
-const pcContainer = document.getElementById('pc');
+const bottoneApriComputer = document.getElementById('apri-computer');
+const schermataComputer = document.getElementById('schermata-computer');
+const pulsanteChiudi = document.getElementById('pulsante-chiudi');
+const displayLivello = document.getElementById('livello');
+const displaySaldo = document.getElementById('saldo');
+const bottoneMostraPorte = document.getElementById('mostra-porte');
+const bottoneMostraMagazzino = document.getElementById('mostra-magazzino');
+const contenitorePc = document.getElementById('schermo-pc');
 
-const doorData = [
-    { id: 1, price: 1000, image: '/immage/porta_inglese.png', name: 'Porta 1' },
-    { id: 2, price: 3000, image: '/immage/porta_italiano.png', name: 'Porta 2' },
-    { id: 3, price: 5000, image: '/immage/porta_moderna.png', name: 'Porta 3' },
-    { id: 4, price: 7000, image: '/immage/porta_orientale.png', name: 'Porta 4' },
-    { id: 5, price: 9000, image: '/immage/porta_gotica.png', name: 'Porta 5' },
-    { id: 6, price: 12000, image: '/immage/porta_blindata.png', name: 'Porta 6' }
+const portaDati = [
+    { id: 1, prezzo: 1000, immagine: '/immage/porta_inglese.png', nome: 'Porta 1' },
+    { id: 2, prezzo: 3000, immagine: '/immage/porta_italiano.png', nome: 'Porta 2' },
+    { id: 3, prezzo: 5000, immagine: '/immage/porta_moderna.png', nome: 'Porta 3' },
+    { id: 4, prezzo: 7000, immagine: '/immage/porta_orientale.png', nome: 'Porta 4' },
+    { id: 5, prezzo: 9000, immagine: '/immage/porta_gotica.png', nome: 'Porta 5' },
+    { id: 6, prezzo: 12000, immagine: '/immage/porta_blindata.png', nome: 'Porta 6' }
 ];
 
 // Funzione per aggiornare il livello in base al saldo
-function updateLevel() {
-    if (balance >= 100000) {
-        level = 3;
-    } else if (balance >= 10000) {
-        level = 2;
+function aggiornaLivello() {
+    if (saldo >= 100000) {
+        livello = 3;
+    } else if (saldo >= 10000) {
+        livello = 2;
     } else {
-        level = 1;
+        livello = 1;
     }
-    levelDisplay.textContent = level;
+    displayLivello.textContent = livello;
 }
 
 // Mostra il saldo corrente
-balanceDisplay.textContent = balance.toFixed(2);
+displaySaldo.textContent = saldo.toFixed(2);
 
 // Funzione per mostrare le porte
-function showDoors() {
-    pcContainer.innerHTML = ''; // Pulisce il contenuto della schermata PC
-    doorData.forEach((door) => {
-        const doorElement = document.createElement('div');
-        doorElement.classList.add('door-container');
-        doorElement.innerHTML = `
-            <img src="${door.image}" alt="Porta ${door.id}">
-            <p>${door.name}</p>
-            <p>Prezzo: €${door.price}</p>
-            <button onclick="buyDoor(${door.id}, ${door.price})">Compra</button>
+function mostraPorte() {
+    contenitorePc.innerHTML = ''; // Pulisce il contenuto della schermata PC
+    portaDati.forEach((porta) => {
+        const elementoPorta = document.createElement('div');
+        elementoPorta.classList.add('contenitore-porta');
+        elementoPorta.innerHTML = `
+            <img src="${porta.immagine}" alt="Porta ${porta.id}">
+            <p>${porta.nome}</p>
+            <p>Prezzo: €${porta.prezzo}</p>
+            <button onclick="compraPorta(${porta.id}, ${porta.prezzo})">Compra</button>
         `;
-        pcContainer.appendChild(doorElement);
+        contenitorePc.appendChild(elementoPorta);
     });
 }
 
 // Funzione per acquistare una porta
-function buyDoor(doorId, doorPrice) {
+function compraPorta(idPorta, prezzoPorta) {
     if (magazzino.length >= 10) {
         alert('Il magazzino è pieno! Capienza massima: 10 porte.');
         return;
     }
-    if (balance >= doorPrice) {
-        balance -= doorPrice;
-        magazzino.push(doorData.find((door) => door.id === doorId));
-        balanceDisplay.textContent = balance.toFixed(2);
-        updateLevel();
-        alert(`Hai acquistato ${doorData.find((door) => door.id === doorId).name}.`);
+    if (saldo >= prezzoPorta) {
+        saldo -= prezzoPorta;
+        magazzino.push(portaDati.find((porta) => porta.id === idPorta));
+        displaySaldo.textContent = saldo.toFixed(2);
+        aggiornaLivello();
+        alert(`Hai acquistato ${portaDati.find((porta) => porta.id === idPorta).nome}.`);
     } else {
         alert('Saldo insufficiente per acquistare questa porta.');
     }
 }
 
 // Funzione per mostrare il contenuto del magazzino
-function showWarehouse() {
-    pcContainer.innerHTML = ''; // Pulisce il contenuto della schermata PC
+function mostraMagazzino() {
+    contenitorePc.innerHTML = ''; // Pulisce il contenuto della schermata PC
     if (magazzino.length === 0) {
-        pcContainer.innerHTML = '<p>Il magazzino è vuoto.</p>';
+        contenitorePc.innerHTML = '<p>Il magazzino è vuoto.</p>';
     } else {
-        magazzino.forEach((item, index) => {
-            const venditaPrezzo = item.price + (item.price * venditaIncremento / 100);
-            const itemElement = document.createElement('div');
-            itemElement.classList.add('door-container');
-            itemElement.innerHTML = `
-                <img src="${item.image}" alt="${item.name}">
-                <p>${item.name}</p>
-                <p>Prezzo originale: €${item.price}</p>
-                <p>Prezzo di vendita: €${venditaPrezzo.toFixed(2)}</p>
-                <button onclick="sellDoor(${index}, ${venditaPrezzo})">Vendi</button>
+        magazzino.forEach((oggetto, indice) => {
+            const prezzoVendita = oggetto.prezzo + (oggetto.prezzo * venditaIncremento / 100);
+            const elementoOggetto = document.createElement('div');
+            elementoOggetto.classList.add('contenitore-porta');
+            elementoOggetto.innerHTML = `
+                <img src="${oggetto.immagine}" alt="${oggetto.nome}">
+                <p>${oggetto.nome}</p>
+                <p>Prezzo originale: €${oggetto.prezzo}</p>
+                <p>Prezzo di vendita: €${prezzoVendita.toFixed(2)}</p>
+                <button onclick="vendiPorta(${indice}, ${prezzoVendita})">Vendi</button>
             `;
-            pcContainer.appendChild(itemElement);
+            contenitorePc.appendChild(elementoOggetto);
         });
     }
 }
 
 // Funzione per vendere una porta
-function sellDoor(index, venditaPrezzo) {
-    if (index < magazzino.length) {
-        balance += venditaPrezzo;
-        magazzino.splice(index, 1); // Rimuove la porta venduta dal magazzino
-        balanceDisplay.textContent = balance.toFixed(2);
-        updateLevel();
-        alert(`Hai venduto la porta per €${venditaPrezzo.toFixed(2)}.`);
-        showWarehouse(); // Aggiorna la schermata del magazzino
+function vendiPorta(indice, prezzoVendita) {
+    if (indice < magazzino.length) {
+        saldo += prezzoVendita;
+        magazzino.splice(indice, 1); // Rimuove la porta venduta dal magazzino
+        displaySaldo.textContent = saldo.toFixed(2);
+        aggiornaLivello();
+        alert(`Hai venduto la porta per €${prezzoVendita.toFixed(2)}.`);
+        mostraMagazzino(); // Aggiorna la schermata del magazzino
     }
 }
 
-// Event listener per mostrare la schermata Porte
-showDoorsButton.addEventListener('click', showDoors);
+// Event listener per mostrare la schermata delle Porte
+bottoneMostraPorte.addEventListener('click', mostraPorte);
 
-// Event listener per mostrare la schermata Magazzino
-showWarehouseButton.addEventListener('click', showWarehouse);
+// Event listener per mostrare la schermata del Magazzino
+bottoneMostraMagazzino.addEventListener('click', mostraMagazzino);
 
 // Event listener per aprire e chiudere la scheda Computer
-openComputerButton.addEventListener('click', () => {
-    computerScreen.classList.remove('hidden');
+bottoneApriComputer.addEventListener('click', () => {
+    schermataComputer.classList.remove('nascosto');
 });
 
-closeButton.addEventListener('click', () => {
-    computerScreen.classList.add('hidden');
+pulsanteChiudi.addEventListener('click', () => {
+    schermataComputer.classList.add('nascosto');
 });

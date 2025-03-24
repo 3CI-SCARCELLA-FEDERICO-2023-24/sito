@@ -6,6 +6,23 @@ body {
     overflow: hidden;
 }
 
+.door-container {
+    width: 400px;
+    height: 400px;
+    border: 1px solid #ddd;
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+    display: fixed;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
 #main-screen {
     display: flex;
     justify-content: flex-end;
@@ -106,22 +123,7 @@ body {
     overflow-y: auto;
 }
 
-.door-container {
-    width: 400px;
-    height: 400px;
-    border: 1px solid #ddd;
-    background-color: white;
-    padding: 15px;
-    border-radius: 8px;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-}
+
 
 .door-container:hover {
     transform: scale(1.05);

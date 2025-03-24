@@ -13,15 +13,15 @@ const bottoneMostraMagazzino = document.getElementById('mostra-magazzino');
 const contenitorePc = document.getElementById('schermo-pc');
 
 const portaDati = [
-    { id: 1, prezzo: 1000, immagine: '/immage/porta_inglese.png', nome: 'Porta 1' },
-    { id: 2, prezzo: 3000, immagine: '/immage/porta_italiano.png', nome: 'Porta 2' },
-    { id: 3, prezzo: 5000, immagine: '/immage/porta_moderna.png', nome: 'Porta 3' },
-    { id: 4, prezzo: 7000, immagine: '/immage/porta_orientale.png', nome: 'Porta 4' },
-    { id: 5, prezzo: 9000, immagine: '/immage/porta_gotica.png', nome: 'Porta 5' },
-    { id: 6, prezzo: 12000, immagine: '/immage/porta_blindata.png', nome: 'Porta 6' }
+  { id: 1, prezzo: 1000, immagine: '/immage/porta_inglese.png', nome: 'Porta 1' },
+  { id: 2, prezzo: 3000, immagine: '/immage/porta_italiano.png', nome: 'Porta 2' },
+  { id: 3, prezzo: 5000, immagine: '/immage/porta_moderna.png', nome: 'Porta 3' },
+  { id: 4, prezzo: 7000, immagine: '/immage/porta_orientale.png', nome: 'Porta 4' },
+  { id: 5, prezzo: 9000, immagine: '/immage/porta_gotica.png', nome: 'Porta 5' },
+  { id: 6, prezzo: 12000, immagine: '/immage/porta_blindata.png', nome: 'Porta 6' }
 ];
 
-// Funzione per aggiornare il livello in base al saldo
+// Aggiorna il livello in base al saldo
 function aggiornaLivello() {
     if (saldo >= 100000) {
         livello = 3;
@@ -33,12 +33,13 @@ function aggiornaLivello() {
     displayLivello.textContent = livello;
 }
 
-// Mostra il saldo corrente
+// Imposta il saldo iniziale
 displaySaldo.textContent = saldo.toFixed(2);
 
-// Funzione per mostrare le porte
+// Funzione per mostrare le porte disponibili
 function mostraPorte() {
     contenitorePc.innerHTML = ''; // Pulisce il contenuto della schermata PC
+
     portaDati.forEach((porta) => {
         const elementoPorta = document.createElement('div');
         elementoPorta.classList.add('contenitore-porta');
@@ -46,9 +47,19 @@ function mostraPorte() {
             <img src="${porta.immagine}" alt="Porta ${porta.id}">
             <p>${porta.nome}</p>
             <p>Prezzo: €${porta.prezzo}</p>
-            <button onclick="compraPorta(${porta.id}, ${porta.prezzo})">Compra</button>
+            <button class="compra-btn" data-id="${porta.id}" data-prezzo="${porta.prezzo}">Compra</button>
         `;
         contenitorePc.appendChild(elementoPorta);
+    });
+
+    // Aggiungo gli event listener per ciascun pulsante "Compra"
+    const compraBtns = document.querySelectorAll('.compra-btn');
+    compraBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const idPorta = parseInt(btn.getAttribute('data-id'));
+            const prezzoPorta = parseFloat(btn.getAttribute('data-prezzo'));
+            compraPorta(idPorta, prezzoPorta);
+        });
     });
 }
 
@@ -72,6 +83,7 @@ function compraPorta(idPorta, prezzoPorta) {
 // Funzione per mostrare il contenuto del magazzino
 function mostraMagazzino() {
     contenitorePc.innerHTML = ''; // Pulisce il contenuto della schermata PC
+
     if (magazzino.length === 0) {
         contenitorePc.innerHTML = '<p>Il magazzino è vuoto.</p>';
     } else {
@@ -84,9 +96,19 @@ function mostraMagazzino() {
                 <p>${oggetto.nome}</p>
                 <p>Prezzo originale: €${oggetto.prezzo}</p>
                 <p>Prezzo di vendita: €${prezzoVendita.toFixed(2)}</p>
-                <button onclick="vendiPorta(${indice}, ${prezzoVendita})">Vendi</button>
+                <button class="vendi-btn" data-indice="${indice}" data-vendita="${prezzoVendita}">Vendi</button>
             `;
             contenitorePc.appendChild(elementoOggetto);
+        });
+
+        // Aggiungo gli event listener per ciascun pulsante "Vendi"
+        const vendiBtns = document.querySelectorAll('.vendi-btn');
+        vendiBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const indice = parseInt(btn.getAttribute('data-indice'));
+                const prezzoVendita = parseFloat(btn.getAttribute('data-vendita'));
+                vendiPorta(indice, prezzoVendita);
+            });
         });
     }
 }

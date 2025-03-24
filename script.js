@@ -1,6 +1,6 @@
 // Stato iniziale e variabili globali
 let livello = 1;
-let saldo = 5000;
+let saldo = 9000;
 let magazzino = [];         // Magazzino per le porte
 let venditaIncremento = 20;  // Percentuale di incremento (applicata sia a porte che a case)
 

@@ -1,7 +1,8 @@
 // Stato iniziale e variabili globali
-let livello = 1;
-let saldo = 50000;
-let magazzino = [];
+let livello = 1; // Livello attuale
+let saldo = 5000; // Saldo iniziale
+let livelloMassimo = 1; // Memorizza il livello massimo raggiunto
+let magazzino = []; // Magazzino per le porte acquistate
 let venditaIncremento = 20; // Percentuale di incremento per la vendita
 let agentiAcquistati = []; // Lista di agenti immobiliari acquistati
 
@@ -17,7 +18,7 @@ const bottoneMostraAgenti = document.getElementById('mostra-agenti');
 const bottoneMostraMagazzino = document.getElementById('mostra-magazzino');
 const contenitorePc = document.getElementById('schermo-pc');
 
-// Dati simulati per porte, case e agenti
+// Dati delle porte
 const portaDati = [
   { id: 1, prezzo: 1000, immagine: '/immage/porta_inglese.png', nome: 'Porta 1' },
   { id: 2, prezzo: 3000, immagine: '/immage/porta_italiano.png', nome: 'Porta 2' },
@@ -27,12 +28,14 @@ const portaDati = [
   { id: 6, prezzo: 12000, immagine: '/immage/porta_blindata.png', nome: 'Porta 6' }
 ];
 
+// Dati delle case
 const caseDati = [
   { id: 1, prezzo: 20000, immagine: '/immage/casa_classica.png', nome: 'Casa 1' },
   { id: 2, prezzo: 30000, immagine: '/immage/casa_moderna.png', nome: 'Casa 2' },
   { id: 3, prezzo: 40000, immagine: '/immage/casa_lussuosa.png', nome: 'Casa 3' }
 ];
 
+// Dati degli agenti immobiliari
 const agentiDati = [
   { id: 1, nome: 'Agente Alpha', prezzo: 2000, professionalita: 80, trattativa: 70, percentuale: 10 },
   { id: 2, nome: 'Agente Beta', prezzo: 3000, professionalita: 90, trattativa: 60, percentuale: 15 },
@@ -48,17 +51,22 @@ function aggiornaLivello() {
   } else {
     livello = 1;
   }
+
+  // Memorizza il livello massimo raggiunto
+  if (livello > livelloMassimo) {
+    livelloMassimo = livello;
+  }
+
+  // Imposta il livello attuale al massimo raggiunto
+  livello = livelloMassimo;
+
+  // Aggiorna la visualizzazione del livello
   displayLivello.textContent = livello;
 }
 
-// Imposta il saldo iniziale
-displaySaldo.textContent = saldo.toFixed(2);
-
-/* —— GESTIONE DELLE PORTE —— */
 // Mostra le porte disponibili
 function mostraPorte() {
-  contenitorePc.innerHTML = ''; // Pulisce il contenitore
-
+  contenitorePc.innerHTML = '';
   portaDati.forEach((porta) => {
     const elementoPorta = document.createElement('div');
     elementoPorta.classList.add('contenitore-porta');
@@ -101,7 +109,7 @@ function compraPorta(idPorta, prezzoPorta) {
   }
 }
 
-// Mostra il contenuto del magazzino (porte)
+// Mostra il contenuto del magazzino
 function mostraMagazzino() {
   contenitorePc.innerHTML = '';
   if (magazzino.length === 0) {
@@ -143,8 +151,7 @@ function vendiPorta(indice, prezzoVendita) {
   }
 }
 
-/* —— GESTIONE DELLE CASE —— */
-// Mostra le case disponibili: accesso limitato al livello 2 o superiore
+// Mostra le case disponibili
 function mostraCase() {
   if (livello < 2) {
     alert("Devi raggiungere il livello 2 per accedere alla sezione case.");
@@ -174,7 +181,7 @@ function mostraCase() {
   });
 }
 
-// Acquista una casa: necessita di un agente immobiliare e accesso libero al livello 2
+// Acquista una casa
 function compraCasa(idCasa, prezzoCasa) {
   if (livello < 2) {
     alert("Devi raggiungere il livello 2 per acquistare una casa.");

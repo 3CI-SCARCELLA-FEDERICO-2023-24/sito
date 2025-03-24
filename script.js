@@ -13,12 +13,12 @@ const showWarehouseButton = document.getElementById('show-warehouse');
 const pcContainer = document.getElementById('pc');
 
 const doorData = [
-    { id: 1, price: 1000, image: 'porta_inglese.png', name: 'Porta 1' },
-    { id: 2, price: 3000, image: 'porta_italiano.png', name: 'Porta 2' },
-    { id: 3, price: 5000, image: 'porta_moderna.png', name: 'Porta 3' },
-    { id: 4, price: 7000, image: 'porta_orientale.png', name: 'Porta 4' },
-    { id: 5, price: 9000, image: 'porta_gotica.png', name: 'Porta 5' },
-    { id: 6, price: 12000, image: 'porta_blindata.png', name: 'Porta 6' }
+    { id: 1, price: 1000, image: 'immage/porta_inglese.png', name: 'Porta 1' },
+    { id: 2, price: 3000, image: 'immage/porta_italiano.png', name: 'Porta 2' },
+    { id: 3, price: 5000, image: 'immage/porta_moderna.png', name: 'Porta 3' },
+    { id: 4, price: 7000, image: 'immage/porta_orientale.png', name: 'Porta 4' },
+    { id: 5, price: 9000, image: 'immage/porta_gotica.png', name: 'Porta 5' },
+    { id: 6, price: 12000, image: 'immage/porta_blindata.png', name: 'Porta 6' }
 ];
 
 // Funzione per aggiornare il livello in base al saldo

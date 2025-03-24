@@ -1,6 +1,6 @@
 // Stato iniziale e variabili globali
 let livello = 1;
-let saldo = 5000;
+let saldo = 50000;
 let magazzino = [];
 let venditaIncremento = 20; // Percentuale di incremento per la vendita
 let agentiAcquistati = []; // Lista di agenti immobiliari acquistati

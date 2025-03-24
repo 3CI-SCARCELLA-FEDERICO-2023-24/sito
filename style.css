@@ -1,150 +1,149 @@
 /* Stile globale */
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    overflow: hidden;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  overflow: hidden;
 }
 
 .contenitore-porta {
-    width: 400px;
-    height: 400px;
-    border: 1px solid #ddd;
-    background-color: white;
-    padding: 15px;
-    padding-bottom: 200px;
-    border-radius: 8px;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease;
-    display: block;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+  width: 400px;
+  height: 400px;
+  border: 1px solid #ddd;
+  background-color: white;
+  padding: 15px;
+  padding-bottom: 200px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+  display: block;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
 #schermata-principale {
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-    width: 100vw;
-    height: 100vh;
-    background: url('path-to-your-image.jpg') no-repeat center center/cover;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  width: 100vw;
+  height: 100vh;
+  background: url('path-to-your-image.jpg') no-repeat center center/cover;
 }
 
 #apri-computer {
-    margin: 20px;
-    padding: 15px 30px;
-    font-size: 20px;
-    background-color: #0078D7;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin: 20px;
+  padding: 15px 30px;
+  font-size: 20px;
+  background-color: #0078D7;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 #apri-computer:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
 }
 
 #schermata-computer {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: #fff;
-    display: flex;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #fff;
+  display: flex;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 #schermata-computer.nascosto {
-    display: none;
+  display: none;
 }
 
 #pulsante-chiudi {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 20px;
-    color: #0078D7;
-    cursor: pointer;
-    background: none;
-    border: none;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  color: #0078D7;
+  cursor: pointer;
+  background: none;
+  border: none;
 }
 
 #menu {
-    width: 250px;
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-right: 2px solid #ddd;
-    box-shadow: 4px 0 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 15px;
+  width: 250px;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-right: 2px solid #ddd;
+  box-shadow: 4px 0 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
 }
 
 .menu-header {
-    font-size: 22px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #333;
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
 }
 
 #menu button {
-    width: 100%;
-    padding: 10px 0;
-    font-size: 16px;
-    color: white;
-    background-color: #0078D7;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: white;
+  background-color: #0078D7;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
 #menu button:hover {
-    background-color: #005bb5;
+  background-color: #005bb5;
 }
 
 #schermo-pc {
-    flex: 1;
-    background-color: #fafafa;
-    display: flex;
-    flex-wrap: wrap;
-    padding: 20px;
-    gap: 20px;
-    justify-content: center;
-    align-items: flex-start;
-    overflow-y: auto;
+  flex: 1;
+  background-color: #fafafa;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+  gap: 20px;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-y: auto;
 }
 
 .contenitore-porta:hover {
-    transform: scale(1.05);
+  transform: scale(1.05);
 }
 
-
 .contenitore-porta img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 6px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
 }
 
 .contenitore-porta button {
-    padding: 8px 12px;
-    background-color: #0078D7;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px;
-    cursor: pointer;
+  padding: 8px 12px;
+  background-color: #0078D7;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
 }
 
 .contenitore-porta button:hover {
-    background-color: #005bb5;
+  background-color: #005bb5;
 }

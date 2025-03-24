@@ -6,23 +6,6 @@ body {
   overflow: hidden;
 }
 
-.contenitore-porta {
-  width: 400px;
-  height: 400px;
-  border: 1px solid #ddd;
-  background-color: white;
-  padding: 15px;
-  padding-bottom: 200px;
-  border-radius: 8px;
-  text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease;
-  display: block;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-}
-
 #schermata-principale {
   display: flex;
   justify-content: flex-end;
@@ -121,6 +104,23 @@ body {
   justify-content: center;
   align-items: flex-start;
   overflow-y: auto;
+}
+
+.contenitore-porta {
+  width: 400px;
+  height: 400px;
+  border: 1px solid #ddd;
+  background-color: white;
+  padding: 15px;
+  padding-bottom: 200px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+  display: block;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .contenitore-porta:hover {

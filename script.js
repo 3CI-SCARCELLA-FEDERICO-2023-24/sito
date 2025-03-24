@@ -227,8 +227,13 @@ Guadagno ottenuto: €${guadagnoNetto.toFixed(2)}.`);
 }
 
 /* —— GESTIONE DEGLI AGENTI IMMOBILIARI —— */
-// Visualizza la selezione degli agenti
+// Visualizza la selezione degli agenti: accesso consentito solo dal livello 2
 function mostraAgenti() {
+  if (livello < 2) {
+    alert("Devi raggiungere il livello 2 per accedere alla sezione agenti immobiliari.");
+    return;
+  }
+  
   contenitorePc.innerHTML = ''; // Pulisce lo schermo PC
   if (agenteAttivo) {
     contenitorePc.innerHTML = `<p>Hai già acquistato un agente immobiliare: ${agenteAttivo.nome}</p>`;

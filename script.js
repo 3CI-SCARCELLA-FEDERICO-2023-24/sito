@@ -1,9 +1,11 @@
 // Stato iniziale e variabili globali
 let livello = 1;
-let saldo = 5000;
+let saldo = 40000;
 let magazzino = [];         // Magazzino per le porte
-let venditaIncremento = 20;  // Percentuale di incremento per la vendita
-let agentiAcquistati = [];   // Lista di agenti acquistati
+let venditaIncremento = 20;  // Percentuale di incremento (applicata sia a porte che a case)
+
+let agenteAttivo = null;     // Agente immobiliare acquistato (necessario per comprare una casa)
+let casaInVendita = false;   // Flag per indicare se è in corso la vendita di una casa
 
 // Riferimenti agli elementi del DOM
 const bottoneApriComputer = document.getElementById('apri-computer');
@@ -57,10 +59,9 @@ function aggiornaLivello() {
 displaySaldo.textContent = saldo.toFixed(2);
 
 /* —— GESTIONE DELLE PORTE —— */
-// Mostra le porte disponibili
+// Visualizza le porte disponibili
 function mostraPorte() {
-  contenitorePc.innerHTML = ''; // Pulisce il contenitore
-
+  contenitorePc.innerHTML = ''; // Pulisce lo schermo PC
   portaDati.forEach((porta) => {
     const elementoPorta = document.createElement('div');
     elementoPorta.classList.add('contenitore-porta');
@@ -72,7 +73,8 @@ function mostraPorte() {
     `;
     contenitorePc.appendChild(elementoPorta);
   });
-
+  
+  // Aggiungo gli event listener per i pulsanti "Compra"
   const compraBtns = document.querySelectorAll('.compra-btn');
   compraBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -146,16 +148,17 @@ function vendiPorta(indice, prezzoVendita) {
 }
 
 /* —— GESTIONE DELLE CASE —— */
-// Mostra le case disponibili: accesso limitato al livello 2 o superiore
+// Visualizza le case disponibili: se il livello è inferiore a 2, blocca l'accesso
 function mostraCase() {
   if (livello < 2) {
     alert("Devi raggiungere il livello 2 per accedere alla sezione case.");
     return;
   }
-
-  contenitorePc.innerHTML = '';
+  
+  contenitorePc.innerHTML = ''; // Pulisce lo schermo PC
   caseDati.forEach((casa) => {
     const elementoCasa = document.createElement('div');
+    // Riutilizziamo lo stesso container delle porte per coerenza grafica
     elementoCasa.classList.add('contenitore-porta');
     elementoCasa.innerHTML = `
       <img src="${casa.immagine}" alt="${casa.nome}">
@@ -165,7 +168,7 @@ function mostraCase() {
     `;
     contenitorePc.appendChild(elementoCasa);
   });
-
+  
   const compraCasaBtns = document.querySelectorAll('.compra-casa-btn');
   compraCasaBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -176,127 +179,79 @@ function mostraCase() {
   });
 }
 
-// Acquista una casa: necessita di un agente immobiliare e accesso libero al livello 2
+// Acquista una casa: è possibile solo se esiste un agente e se non è già in corso una vendita
 function compraCasa(idCasa, prezzoCasa) {
   if (livello < 2) {
     alert("Devi raggiungere il livello 2 per acquistare una casa.");
+    return;
+  }
+  if (!agenteAttivo) {
+    alert('Devi acquistare un agente immobiliare prima di comprare una casa.');
+    return;
+  }
+  if (casaInVendita) {
+    alert("Un agente immobiliare è già impegnato nella vendita di una casa. Attendi il completamento della vendita.");
     return;
   }
   if (saldo < prezzoCasa) {
     alert('Saldo insufficiente per acquistare questa casa.');
     return;
   }
-  if (agentiAcquistati.length === 0) {
-    alert('Devi acquistare almeno un agente immobiliare per procedere con l\'acquisto di una casa.');
-    return;
-  }
-
   saldo -= prezzoCasa;
   displaySaldo.textContent = saldo.toFixed(2);
   const casaAcquistata = caseDati.find(casa => casa.id === idCasa);
   if (casaAcquistata) {
-    alert(`Hai acquistato ${casaAcquistata.nome}. La vendita sarà gestita automaticamente.`);
+    casaInVendita = casaAcquistata; // L'agente inizia a vendere questa casa
+    alert(`Hai acquistato ${casaAcquistata.nome}. La vendita avverrà automaticamente tra 1 e 3 minuti.`);
     aggiornaLivello();
-
-    // Assegna la casa al primo agente disponibile
-    const agenteDisponibile = agentiAcquistati.find(agente => !agente.tempoRimanente || agente.tempoRimanente <= 0);
-    if (agenteDisponibile) {
-      iniziaVenditaCasa(agenteDisponibile, casaAcquistata);
-    } else {
-      alert('Tutti gli agenti sono attualmente impegnati nella vendita. La casa sarà venduta quando un agente sarà disponibile.');
-    }
+    // Imposta timer per vendita automatica (delay random tra 60000 e 180000 ms)
+    const delay = Math.floor(Math.random() * (180000 - 60000 + 1)) + 60000;
+    casaAcquistata.timeoutId = setTimeout(() => {
+      autoVendiCasa(casaAcquistata);
+    }, delay);
   }
 }
 
-// Avvia la vendita automatica della casa con un agente
-function iniziaVenditaCasa(agente, casa) {
-  const tempoVendita = Math.floor(Math.random() * (180000 - 60000 + 1)) + 60000; // Tempo randomico tra 1 e 3 minuti
-  agente.tempoRimanente = tempoVendita;
-
+// Vendita automatica della casa
+function autoVendiCasa(casa) {
   const prezzoVenditaCasa = casa.prezzo + (casa.prezzo * venditaIncremento / 100);
-  const commissione = prezzoVenditaCasa * (agente.percentuale / 100);
+  const commissione = prezzoVenditaCasa * (agenteAttivo.percentuale / 100);
   const guadagnoNetto = prezzoVenditaCasa - commissione;
-
-  // Aggiorna la barra di progresso dinamicamente
-  const idBarra = `progresso-${agente.id}`;
-  const barraProgresso = document.getElementById(idBarra);
-
-  const intervallo = setInterval(() => {
-    agente.tempoRimanente -= 1000; // Aggiorna ogni secondo
-    const percentuale = ((tempoVendita - agente.tempoRimanente) / tempoVendita) * 100;
-    if (barraProgresso) {
-      barraProgresso.style.width = `${percentuale}%`;
-      barraProgresso.textContent = `${Math.round(percentuale)}%`;
-    }
-
-    if (agente.tempoRimanente <= 0) {
-      clearInterval(intervallo); // Ferma il timer
-      saldo += guadagnoNetto;
-      displaySaldo.textContent = saldo.toFixed(2);
-      alert(`La casa ${casa.nome} è stata venduta per €${prezzoVenditaCasa.toFixed(2)}.
+  saldo += guadagnoNetto;
+  displaySaldo.textContent = saldo.toFixed(2);
+  alert(`La casa ${casa.nome} è stata venduta per €${prezzoVenditaCasa.toFixed(2)}.
 Commissione dell'agente: €${commissione.toFixed(2)}.
-Guadagno netto: €${guadagnoNetto.toFixed(2)}.`);
-      aggiornaLivello();
-      agente.tempoRimanente = 0; // L'agente è ora disponibile
-    }
-  }, 1000);
+Guadagno ottenuto: €${guadagnoNetto.toFixed(2)}.`);
+  aggiornaLivello();
+  casaInVendita = false;
 }
 
 /* —— GESTIONE DEGLI AGENTI IMMOBILIARI —— */
-// Mostra gli agenti immobiliari acquistati e disponibili
+// Visualizza la selezione degli agenti: accesso consentito solo dal livello 2
 function mostraAgenti() {
   if (livello < 2) {
     alert("Devi raggiungere il livello 2 per accedere alla sezione agenti immobiliari.");
     return;
   }
-
-  contenitorePc.innerHTML = ''; // Pulisce il contenitore
-
-  // Sezione degli agenti acquistati
-  if (agentiAcquistati.length > 0) {
-    const titoloAcquistati = document.createElement('h3');
-    titoloAcquistati.textContent = 'Agenti Acquistati';
-    contenitorePc.appendChild(titoloAcquistati);
-
-    agentiAcquistati.forEach(agente => {
-      const elementoAgente = document.createElement('div');
-      elementoAgente.classList.add('contenitore-porta');
-      elementoAgente.innerHTML = `
-        <p>${agente.nome}</p>
-        <p>Professionalità: ${agente.professionalita}</p>
-        <p>Trattativa: ${agente.trattativa}</p>
-        <p>Commissione: ${agente.percentuale}%</p>
-        <div class="barra-progresso-container">
-          <div class="barra-progresso" id="progresso-${agente.id}" style="width: 0%;"></div>
-        </div>
-      `;
-      contenitorePc.appendChild(elementoAgente);
-
-      // Aggiorna dinamicamente la barra di progresso
-      const barraProgresso = document.getElementById(`progresso-${agente.id}`);
-      aggiornaBarraProgresso(barraProgresso, agente.tempoRimanente);
-    });
+  
+  contenitorePc.innerHTML = ''; // Pulisce lo schermo PC
+  if (agenteAttivo) {
+    contenitorePc.innerHTML = `<p>Hai già acquistato un agente immobiliare: ${agenteAttivo.nome}</p>`;
+    return;
   }
-
-  // Sezione degli agenti disponibili
-  const titoloDisponibili = document.createElement('h3');
-  titoloDisponibili.textContent = 'Agenti Disponibili';
-  contenitorePc.appendChild(titoloDisponibili);
-
-  agentiDati.forEach(agente => {
+  agentiDati.forEach(agent => {
     const elementoAgente = document.createElement('div');
     elementoAgente.classList.add('contenitore-porta');
     elementoAgente.innerHTML = `
-      <p>${agente.nome}</p>
-      <p>Prezzo: €${agente.prezzo}</p>
-      <p>Professionalità: ${agente.professionalita}</p>
-      <p>Trattativa: ${agente.trattativa}</p>
-      <p>Commissione: ${agente.percentuale}%</p>
-      <button class="compra-agente-btn" data-id="${agente.id}" data-prezzo="${agente.prezzo}">Compra Agente</button>
+      <p>${agent.nome}</p>
+      <p>Prezzo: €${agent.prezzo}</p>
+      <p>Professionalità: ${agent.professionalita}</p>
+      <p>Trattativa: ${agent.trattativa}</p>
+      <p>Commissione: ${agent.percentuale}%</p>
+      <button class="compra-agente-btn" data-id="${agent.id}" data-prezzo="${agent.prezzo}">Compra Agente</button>
     `;
     contenitorePc.appendChild(elementoAgente);
   });
-
   const compraAgenteBtns = document.querySelectorAll('.compra-agente-btn');
   compraAgenteBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -317,7 +272,20 @@ function compraAgente(idAgente, prezzoAgente) {
   displaySaldo.textContent = saldo.toFixed(2);
   const agente = agentiDati.find(a => a.id === idAgente);
   if (agente) {
-    agentiAcquistati.push({ ...agente, tempoRimanente: 0 }); // Aggiungi l'agente alla lista
-    alert(`Hai acquistato l'agente immobiliare ${agente.nome}. Ora puoi utilizzarlo per vendere case.`);
+    agenteAttivo = agente;
+    alert(`Hai acquistato l'agente immobiliare ${agente.nome}. Ora puoi acquistare case.`);
   }
 }
+
+/* —— EVENT LISTENERS —— */
+bottoneMostraPorte.addEventListener('click', mostraPorte);
+bottoneMostraMagazzino.addEventListener('click', mostraMagazzino);
+bottoneMostraCase.addEventListener('click', mostraCase);
+bottoneMostraAgenti.addEventListener('click', mostraAgenti);
+
+bottoneApriComputer.addEventListener('click', () => {
+  schermataComputer.classList.remove('nascosto');
+});
+pulsanteChiudi.addEventListener('click', () => {
+  schermataComputer.classList.add('nascosto');
+});

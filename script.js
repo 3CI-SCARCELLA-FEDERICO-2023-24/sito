@@ -68,7 +68,7 @@ function mostraOggetti(dati, tipo, callback) {
   });
 }
 
-// Funzioni per acquistare porte e case
+// Funzioni per acquistare porte, case e agenti
 function compraPorta(id, prezzo) {
   if (magazzino.length >= 10 || saldo < prezzo) return alert('Acquisto non possibile.');
   saldo -= prezzo;
@@ -85,6 +85,18 @@ function compraCasa(id, prezzo) {
   aggiornaSaldo();
   aggiornaLivello();
   iniziaVenditaCasa(agentiAcquistati[0], caseDati.find(c => c.id === id));
+}
+
+function compraAgente(id, prezzo) {
+  if (saldo < prezzo) return alert('Saldo insufficiente.');
+  const agente = agentiDati.find(a => a.id === id);
+  if (!agente) return;
+
+  saldo -= prezzo;
+  agentiAcquistati.push(agente);
+  registroVendite.push(`Hai acquistato l'agente: ${agente.nome}. Prezzo: €${prezzo}.`);
+  aggiornaSaldo();
+  aggiornaLivello();
 }
 
 // Funzione per vendere una casa
@@ -107,6 +119,7 @@ bottoneApriComputer.addEventListener('click', () => schermataComputer.classList.
 pulsanteChiudi.addEventListener('click', () => schermataComputer.classList.add('nascosto'));
 document.getElementById('mostra-porte').addEventListener('click', () => mostraOggetti(portaDati, 'porte', compraPorta));
 document.getElementById('mostra-case').addEventListener('click', () => livello >= 2 ? mostraOggetti(caseDati, 'case', compraCasa) : alert('Raggiungi livello 2.'));
+document.getElementById('mostra-agenti').addEventListener('click', () => mostraOggetti(agentiDati, 'agenti', compraAgente));
 document.getElementById('registro-vendite').addEventListener('click', () => {
   contenitorePc.innerHTML = registroVendite.map(v => `<p>${v}</p>`).join('');
 });

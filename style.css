@@ -147,3 +147,17 @@ body {
 .contenitore-porta button:hover {
   background-color: #005bb5;
 }
+
+.barra-progresso-container {
+  width: 100%;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  margin-top: 10px;
+  height: 20px;
+}
+
+.barra-progresso {
+  height: 100%;
+  background-color: #0078D7;
+  border-radius: 4px;
+}

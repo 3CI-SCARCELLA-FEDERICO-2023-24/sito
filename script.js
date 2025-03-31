@@ -20,19 +20,19 @@ const contenitorePc = document.getElementById('schermo-pc');
 
 // Dati delle porte
 const portaDati = [
-  { id: 1, prezzo: 1000, immagine: '/immage/porta_inglese.png', nome: 'Porta 1' },
-  { id: 2, prezzo: 3000, immagine: '/immage/porta_italiano.png', nome: 'Porta 2' },
-  { id: 3, prezzo: 5000, immagine: '/immage/porta_moderna.png', nome: 'Porta 3' },
-  { id: 4, prezzo: 7000, immagine: '/immage/porta_orientale.png', nome: 'Porta 4' },
-  { id: 5, prezzo: 9000, immagine: '/immage/porta_gotica.png', nome: 'Porta 5' },
-  { id: 6, prezzo: 12000, immagine: '/immage/porta_blindata.png', nome: 'Porta 6' }
+  { id: 1, prezzo: 1000, immagine: '\immage/porta_inglese.png', nome: 'Porta 1' },
+  { id: 2, prezzo: 3000, immagine: '\immage/porta_italiano.png', nome: 'Porta 2' },
+  { id: 3, prezzo: 5000, immagine: '\immage/porta_moderna.png', nome: 'Porta 3' },
+  { id: 4, prezzo: 7000, immagine: '\immage/porta_orientale.png', nome: 'Porta 4' },
+  { id: 5, prezzo: 9000, immagine: '\immage/porta_gotica.png', nome: 'Porta 5' },
+  { id: 6, prezzo: 12000, immagine: '\immage/porta_blindata.png', nome: 'Porta 6' }
 ];
 
 // Dati delle case
 const caseDati = [
-  { id: 1, prezzo: 20000, immagine: '/immage/casa_campagna.jpg', nome: 'Casa 1' },
-  { id: 2, prezzo: 30000, immagine: '/immage/casa_media.jpg', nome: 'Casa 2' },
-  { id: 3, prezzo: 40000, immagine: '/immage/casa_moderna.jpg', nome: 'Casa 3' }
+  { id: 1, prezzo: 20000, immagine: '\immage/casa_campagna.jpg', nome: 'Casa 1' },
+  { id: 2, prezzo: 30000, immagine: '\immage/casa_media.jpg', nome: 'Casa 2' },
+  { id: 3, prezzo: 40000, immagine: '\immage/casa_moderna.jpg', nome: 'Casa 3' }
 ];
 
 // Dati degli agenti immobiliari

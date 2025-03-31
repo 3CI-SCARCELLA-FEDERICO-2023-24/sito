@@ -30,9 +30,9 @@ const portaDati = [
 
 // Dati delle case
 const caseDati = [
-  { id: 1, prezzo: 20000, immagine: '/immage/casa_campagna.png', nome: 'Casa 1' },
-  { id: 2, prezzo: 30000, immagine: '/immage/casa_media.png', nome: 'Casa 2' },
-  { id: 3, prezzo: 40000, immagine: '/immage/casa_moderna.png', nome: 'Casa 3' }
+  { id: 1, prezzo: 20000, immagine: '/immage/casa_campagna.jpg', nome: 'Casa 1' },
+  { id: 2, prezzo: 30000, immagine: '/immage/casa_media.jpg', nome: 'Casa 2' },
+  { id: 3, prezzo: 40000, immagine: '/immage/casa_moderna.jpg', nome: 'Casa 3' }
 ];
 
 // Dati degli agenti immobiliari

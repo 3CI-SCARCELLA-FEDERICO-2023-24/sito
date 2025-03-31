@@ -5,7 +5,6 @@ let livelloMassimo = 1; // Memorizza il livello massimo raggiunto
 let magazzino = []; // Magazzino per le porte acquistate
 let venditaIncremento = 20; // Percentuale di incremento per la vendita
 let agentiAcquistati = []; // Lista di agenti immobiliari acquistati
-
 // Riferimenti agli elementi del DOM
 const bottoneApriComputer = document.getElementById('apri-computer');
 const schermataComputer = document.getElementById('schermata-computer');
@@ -17,7 +16,6 @@ const bottoneMostraCase = document.getElementById('mostra-case');
 const bottoneMostraAgenti = document.getElementById('mostra-agenti');
 const bottoneMostraMagazzino = document.getElementById('mostra-magazzino');
 const contenitorePc = document.getElementById('schermo-pc');
-
 // Dati delle porte
 const portaDati = [
   { id: 1, prezzo: 1000, immagine: '\immage/porta_inglese.png', nome: 'Porta 1' },
@@ -27,21 +25,18 @@ const portaDati = [
   { id: 5, prezzo: 9000, immagine: '\immage/porta_gotica.png', nome: 'Porta 5' },
   { id: 6, prezzo: 12000, immagine: '\immage/porta_blindata.png', nome: 'Porta 6' }
 ];
-
 // Dati delle case
 const caseDati = [
   { id: 1, prezzo: 20000, immagine: '\immage/casa_campagna.jpg', nome: 'Casa 1' },
   { id: 2, prezzo: 30000, immagine: '\immage/casa_media.jpg', nome: 'Casa 2' },
   { id: 3, prezzo: 40000, immagine: '\immage/casa_moderna.jpg', nome: 'Casa 3' }
 ];
-
 // Dati degli agenti immobiliari
 const agentiDati = [
   { id: 1, nome: 'Agente Alpha', prezzo: 2000, professionalita: 80, trattativa: 70, percentuale: 10 },
   { id: 2, nome: 'Agente Beta', prezzo: 3000, professionalita: 90, trattativa: 60, percentuale: 15 },
   { id: 3, nome: 'Agente Gamma', prezzo: 2500, professionalita: 75, trattativa: 80, percentuale: 12 }
 ];
-
 // Funzione per aggiornare il livello in base al saldo
 function aggiornaLivello() {
   if (saldo >= 100000) {
@@ -51,7 +46,6 @@ function aggiornaLivello() {
   } else {
     livello = 1;
   }
-
   // Memorizza il livello massimo raggiunto
   if (livello > livelloMassimo) {
     livelloMassimo = livello;
@@ -63,7 +57,6 @@ function aggiornaLivello() {
   // Aggiorna la visualizzazione del livello
   displayLivello.textContent = livello;
 }
-
 // Mostra le porte disponibili
 function mostraPorte() {
   contenitorePc.innerHTML = '';
@@ -78,7 +71,6 @@ function mostraPorte() {
     `;
     contenitorePc.appendChild(elementoPorta);
   });
-
   const compraBtns = document.querySelectorAll('.compra-btn');
   compraBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -88,7 +80,6 @@ function mostraPorte() {
     });
   });
 }
-
 // Acquista una porta
 function compraPorta(idPorta, prezzoPorta) {
   if (magazzino.length >= 10) {
@@ -108,7 +99,6 @@ function compraPorta(idPorta, prezzoPorta) {
     aggiornaLivello();
   }
 }
-
 // Mostra il contenuto del magazzino
 function mostraMagazzino() {
   contenitorePc.innerHTML = '';
@@ -138,7 +128,6 @@ function mostraMagazzino() {
     });
   }
 }
-
 // Vendi una porta
 function vendiPorta(indice, prezzoVendita) {
   if (indice < magazzino.length) {
@@ -150,14 +139,12 @@ function vendiPorta(indice, prezzoVendita) {
     mostraMagazzino();
   }
 }
-
 // Mostra le case disponibili
 function mostraCase() {
   if (livello < 2) {
     alert("Devi raggiungere il livello 2 per accedere alla sezione case.");
     return;
   }
-
   contenitorePc.innerHTML = '';
   caseDati.forEach((casa) => {
     const elementoCasa = document.createElement('div');
@@ -170,7 +157,6 @@ function mostraCase() {
     `;
     contenitorePc.appendChild(elementoCasa);
   });
-
   const compraCasaBtns = document.querySelectorAll('.compra-casa-btn');
   compraCasaBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -180,7 +166,6 @@ function mostraCase() {
     });
   });
 }
-
 // Acquista una casa
 function compraCasa(idCasa, prezzoCasa) {
   if (livello < 2) {
@@ -195,14 +180,12 @@ function compraCasa(idCasa, prezzoCasa) {
     alert('Devi acquistare almeno un agente immobiliare per procedere con l\'acquisto di una casa.');
     return;
   }
-
   saldo -= prezzoCasa;
   displaySaldo.textContent = saldo.toFixed(2);
   const casaAcquistata = caseDati.find(casa => casa.id === idCasa);
   if (casaAcquistata) {
     alert(`Hai acquistato ${casaAcquistata.nome}. La vendita sarà gestita automaticamente.`);
     aggiornaLivello();
-
     // Assegna la casa al primo agente disponibile
     const agenteDisponibile = agentiAcquistati.find(agente => !agente.tempoRimanente || agente.tempoRimanente <= 0);
     if (agenteDisponibile) {
@@ -212,20 +195,16 @@ function compraCasa(idCasa, prezzoCasa) {
     }
   }
 }
-
 // Avvia la vendita automatica della casa con un agente
 function iniziaVenditaCasa(agente, casa) {
   const tempoVendita = Math.floor(Math.random() * (180000 - 60000 + 1)) + 60000; // Tempo randomico tra 1 e 3 minuti
   agente.tempoRimanente = tempoVendita;
-
   const prezzoVenditaCasa = casa.prezzo + (casa.prezzo * venditaIncremento / 100);
   const commissione = prezzoVenditaCasa * (agente.percentuale / 100);
   const guadagnoNetto = prezzoVenditaCasa - commissione;
-
   // Aggiorna la barra di progresso dinamicamente
   const idBarra = `progresso-${agente.id}`;
   const barraProgresso = document.getElementById(idBarra);
-
   const intervallo = setInterval(() => {
     agente.tempoRimanente -= 1000; // Aggiorna ogni secondo
     const percentuale = ((tempoVendita - agente.tempoRimanente) / tempoVendita) * 100;
@@ -233,7 +212,6 @@ function iniziaVenditaCasa(agente, casa) {
       barraProgresso.style.width = `${percentuale}%`;
       barraProgresso.textContent = `${Math.round(percentuale)}%`;
     }
-
     if (agente.tempoRimanente <= 0) {
       clearInterval(intervallo); // Ferma il timer
       saldo += guadagnoNetto;
@@ -246,7 +224,6 @@ Guadagno netto: €${guadagnoNetto.toFixed(2)}.`);
     }
   }, 1000);
 }
-
 /* —— GESTIONE DEGLI AGENTI IMMOBILIARI —— */
 // Mostra gli agenti immobiliari acquistati e disponibili
 function mostraAgenti() {
@@ -254,15 +231,12 @@ function mostraAgenti() {
     alert("Devi raggiungere il livello 2 per accedere alla sezione agenti immobiliari.");
     return;
   }
-
   contenitorePc.innerHTML = ''; // Pulisce il contenitore
-
   // Sezione degli agenti acquistati
   if (agentiAcquistati.length > 0) {
     const titoloAcquistati = document.createElement('h3');
     titoloAcquistati.textContent = 'Agenti Acquistati';
     contenitorePc.appendChild(titoloAcquistati);
-
     agentiAcquistati.forEach(agente => {
       const elementoAgente = document.createElement('div');
       elementoAgente.classList.add('contenitore-porta');
@@ -276,18 +250,15 @@ function mostraAgenti() {
         </div>
       `;
       contenitorePc.appendChild(elementoAgente);
-
       // Aggiorna dinamicamente la barra di progresso
       const barraProgresso = document.getElementById(`progresso-${agente.id}`);
       aggiornaBarraProgresso(barraProgresso, agente.tempoRimanente);
     });
   }
-
   // Sezione degli agenti disponibili
   const titoloDisponibili = document.createElement('h3');
   titoloDisponibili.textContent = 'Agenti Disponibili';
   contenitorePc.appendChild(titoloDisponibili);
-
   agentiDati.forEach(agente => {
     const elementoAgente = document.createElement('div');
     elementoAgente.classList.add('contenitore-porta');
@@ -301,7 +272,6 @@ function mostraAgenti() {
     `;
     contenitorePc.appendChild(elementoAgente);
   });
-
   const compraAgenteBtns = document.querySelectorAll('.compra-agente-btn');
   compraAgenteBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -311,7 +281,6 @@ function mostraAgenti() {
     });
   });
 }
-
 // Acquista un agente immobiliare
 function compraAgente(idAgente, prezzoAgente) {
   if (saldo < prezzoAgente) {
@@ -326,7 +295,6 @@ function compraAgente(idAgente, prezzoAgente) {
     alert(`Hai acquistato l'agente immobiliare ${agente.nome}. Ora puoi utilizzarlo per vendere case.`);
   }
 }
-
 // Aggiorna dinamicamente la barra di progresso
 function aggiornaBarraProgresso(barraProgresso, tempoRimanente) {
   if (tempoRimanente <= 0) {
@@ -338,20 +306,16 @@ function aggiornaBarraProgresso(barraProgresso, tempoRimanente) {
     barraProgresso.textContent = `${Math.round(percentuale)}%`;
   }
 }
-
 // Event listener per la schermata computer
 bottoneApriComputer.addEventListener('click', () => {
   schermataComputer.classList.remove('nascosto');
 });
-
 pulsanteChiudi.addEventListener('click', () => {
   schermataComputer.classList.add('nascosto');
 });
-
 bottoneMostraPorte.addEventListener('click', mostraPorte);
 bottoneMostraCase.addEventListener('click', mostraCase);
 bottoneMostraAgenti.addEventListener('click', mostraAgenti);
 bottoneMostraMagazzino.addEventListener('click', mostraMagazzino);
-
 // Imposta saldo iniziale
 displaySaldo.textContent = saldo.toFixed(2);

@@ -59,6 +59,7 @@ function aggiornaLivello() {
 }
 // Mostra le porte disponibili
 function mostraPorte() {
+  inflazione(portaDati); // Per le porte
   contenitorePc.innerHTML = '';
   portaDati.forEach((porta) => {
     const elementoPorta = document.createElement('div');
@@ -145,6 +146,7 @@ function mostraCase() {
     alert("Devi raggiungere il livello 2 per accedere alla sezione case.");
     return;
   }
+  inflazione(caseDati);  // Per le case
   contenitorePc.innerHTML = '';
   caseDati.forEach((casa) => {
     const elementoCasa = document.createElement('div');
@@ -227,6 +229,7 @@ Guadagno netto: €${guadagnoNetto.toFixed(2)}.`);
 /* —— GESTIONE DEGLI AGENTI IMMOBILIARI —— */
 // Mostra gli agenti immobiliari acquistati e disponibili
 function mostraAgenti() {
+  inflazione(agentiDati); // Per gli agenti		
   if (livello < 2) {
     alert("Devi raggiungere il livello 2 per accedere alla sezione agenti immobiliari.");
     return;
@@ -326,10 +329,6 @@ function inflazione(){
 		   console.log("Prezzi ripristinati:", dati);
          }, Math.random() * 5000 + 2000); // Tempo di attesa casuale tra 2-7 secondi
     }
-    // Esempio di utilizzo con i tuoi dati
-    randomPrezzo(portaDati); // Per le porte
-    randomPrezzo(caseDati);  // Per le case
-    randomPrezzo(agentiDati); // Per gli agenti
 }	
 // Event listener per la schermata computer
 bottoneApriComputer.addEventListener('click', () => {

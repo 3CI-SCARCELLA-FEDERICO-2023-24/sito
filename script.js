@@ -306,6 +306,31 @@ function aggiornaBarraProgresso(barraProgresso, tempoRimanente) {
     barraProgresso.textContent = `${Math.round(percentuale)}%`;
   }
 }
+// inflazione
+function inflazione(){
+	for(int i=1; i!=0;i++){
+		 // Salva i prezzi originali
+		 const prezziOriginali = dati.map(item => item.prezzo);
+		 // Funzione per generare un incremento casuale
+		 const incrementoCasuale = () => Math.floor(Math.random() * 1000 + 1); // Cambia il valore massimo se vuoi una maggiore variazione
+		 // Innalza il prezzo casualmente
+		 dati.forEach(item => {
+		    item.prezzo += incrementoCasuale();
+		 });
+		 console.log("Prezzi aumentati:", dati);
+		 // Timer per riportare il prezzo casualmente al valore originale
+		 setTimeout(() => {
+		   dati.forEach((item, index) => {
+		     item.prezzo = prezziOriginali[index]; // Ripristina al prezzo originale
+		   });
+		   console.log("Prezzi ripristinati:", dati);
+         }, Math.random() * 5000 + 2000); // Tempo di attesa casuale tra 2-7 secondi
+    }
+    // Esempio di utilizzo con i tuoi dati
+    randomPrezzo(portaDati); // Per le porte
+    randomPrezzo(caseDati);  // Per le case
+    randomPrezzo(agentiDati); // Per gli agenti
+}	
 // Event listener per la schermata computer
 bottoneApriComputer.addEventListener('click', () => {
   schermataComputer.classList.remove('nascosto');

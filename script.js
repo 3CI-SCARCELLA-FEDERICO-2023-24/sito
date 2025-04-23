@@ -1,6 +1,6 @@
 // Stato iniziale e variabili globali
 let livello = 1; // Livello attuale
-let saldo = 1200; // Saldo iniziale
+let saldo = 10200; // Saldo iniziale
 let livelloMassimo = 1; // Memorizza il livello massimo raggiunto
 let magazzino = []; // Magazzino per le porte acquistate
 let venditaIncremento = 40; // Percentuale di incremento per la vendita

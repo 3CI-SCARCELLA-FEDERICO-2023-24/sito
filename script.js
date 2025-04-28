@@ -35,26 +35,26 @@ const contenitorePc = document.getElementById('schermo-pc');
 
 // Dati delle porte
 const portaDati = [
-  { id: 1, prezzo: 1000, immagine: '\immage/porta_inglese.png', nome: 'Porta 1' },
-  { id: 2, prezzo: 3000, immagine: '\immage/porta_italiano.png', nome: 'Porta 2' },
-  { id: 3, prezzo: 5000, immagine: '\immage/porta_moderna.png', nome: 'Porta 3' },
-  { id: 4, prezzo: 7000, immagine: '\immage/porta_orientale.png', nome: 'Porta 4' },
-  { id: 5, prezzo: 9000, immagine: '\immage/porta_gotica.png', nome: 'Porta 5' },
-  { id: 6, prezzo: 12000, immagine: '\immage/porta_blindata.png', nome: 'Porta 6' }
+  { id: 1, prezzo: 1000, immagine: '\immage/porta_inglese.png', nome: 'Porta inglese' },
+  { id: 2, prezzo: 3000, immagine: '\immage/porta_italiano.png', nome: 'Porta italiana' },
+  { id: 3, prezzo: 5000, immagine: '\immage/porta_moderna.png', nome: 'Porta moderna' },
+  { id: 4, prezzo: 7000, immagine: '\immage/porta_orientale.png', nome: 'Porta orientale' },
+  { id: 5, prezzo: 9000, immagine: '\immage/porta_gotica.png', nome: 'Porta gotica' },
+  { id: 6, prezzo: 12000, immagine: '\immage/porta_blindata.png', nome: 'Porta blindata' }
 ];
 
 // Dati delle case
 const caseDati = [
-  { id: 1, prezzo: 20000, immagine: '\immage/casa_campagna.jpg', nome: 'Casa 1' },
-  { id: 2, prezzo: 30000, immagine: '\immage/casa_media.jpg', nome: 'Casa 2' },
-  { id: 3, prezzo: 40000, immagine: '\immage/casa_moderna.jpg', nome: 'Casa 3' }
+  { id: 1, prezzo: 20000, immagine: '\immage/casa_campagna.jpg', nome: 'Casa di campagna' },
+  { id: 2, prezzo: 30000, immagine: '\immage/casa_media.jpg', nome: 'Casa popolare' },
+  { id: 3, prezzo: 40000, immagine: '\immage/casa_moderna.jpg', nome: 'Casa moderna' }
 ];
 
 // Dati degli agenti immobiliari
 const agentiDati = [
-  { id: 1, nome: 'Agente Alpha', prezzo: 2000, professionalita: 80, trattativa: 70, percentuale: 10 },
-  { id: 2, nome: 'Agente Beta', prezzo: 3000, professionalita: 90, trattativa: 60, percentuale: 15 },
-  { id: 3, nome: 'Agente Gamma', prezzo: 2500, professionalita: 75, trattativa: 80, percentuale: 12 }
+  { id: 1, nome: 'Alberto', prezzo: 2000, professionalita: 80, trattativa: 70, percentuale: 10 },
+  { id: 2, nome: 'Carlo', prezzo: 3000, professionalita: 90, trattativa: 60, percentuale: 15 },
+  { id: 3, nome: 'Chiara', prezzo: 2500, professionalita: 75, trattativa: 80, percentuale: 12 }
 ];
 
 // Funzione per aggiornare il livello in base al saldo

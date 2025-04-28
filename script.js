@@ -6,6 +6,8 @@ let magazzino = []; // Magazzino per le porte acquistate
 let venditaIncremento = 40; // Percentuale di incremento per la vendita
 let agentiAcquistati = []; // Lista di agenti immobiliari acquistati
 
+/*-------------------------------------------*/
+
 /* === INIZIALIZZAZIONE DELLE VARIABILI PER LE GUIDE === */
 let guidaPorteMostrata = false;
 let guidaCaseMostrata = false;
@@ -14,6 +16,8 @@ let guidaMagazzinoMostrata = false;
 
 let guidaPortaComprataMostrata = false;
 let guidaCasaComprataMostrata = false;
+let guidaAgenteCompratoMostrata = false;
+let guidaVendiMostrata = false;
 
 let instructionCallback = null;
 
@@ -380,6 +384,8 @@ document.getElementById('modalOk').addEventListener('click', () => {
 // Imposta saldo iniziale
 displaySaldo.textContent = saldo.toFixed(2);
 
+/*---------------------------------------------------------------*/
+
 /* === FUNZIONE PER MOSTRARE LA MODALE ISTRUTTIVA === */
 function showInstructionModal(message, callback) {
   const modal = document.getElementById('infoModal');
@@ -388,7 +394,6 @@ function showInstructionModal(message, callback) {
   modal.style.display = 'block';
 }
 
-/* Modifica dell'event listener per il pulsante OK della modale */
 document.getElementById('modalOk').addEventListener('click', function() {
   const modal = document.getElementById('infoModal');
   modal.style.display = 'none';
@@ -506,7 +511,6 @@ function mostraAgenti() {
 
 function actuallyShowAgenti() {
   contenitorePc.innerHTML = '';
-  // Visualizza prima gli agenti già acquistati (se presenti)
   if (agentiAcquistati.length > 0) {
     const titoloAcquistati = document.createElement('h3');
     titoloAcquistati.textContent = 'Agenti Acquistati';
@@ -528,7 +532,6 @@ function actuallyShowAgenti() {
       aggiornaBarraProgresso(barraProgresso, agente.tempoRimanente);
     });
   }
-  // Visualizza poi gli agenti disponibili
   const titoloDisponibili = document.createElement('h3');
   titoloDisponibili.textContent = 'Agenti Disponibili';
   contenitorePc.appendChild(titoloDisponibili);
@@ -598,5 +601,70 @@ function actuallyShowMagazzino() {
         vendiPorta(indice, prezzoVendita);
       });
     });
+  }
+}
+
+
+/* === WRAPPING DELLE FUNZIONI PER LE AZIONI SUI PULSANTI === */
+
+/* Acquisto di una Porta */
+/* La funzione "compraPorta" già esistente mostra il messaggio:
+   "La porta acquistata la potrai trovare cliccando sul MAGAZZINO."
+   se non ancora mostrato, altrimenti procede normalmente. */
+
+
+/* Acquisto di un Agente Immobiliare */
+function compraAgente(idAgente, prezzoAgente) {
+  if (saldo < prezzoAgente) {
+    alert('Saldo insufficiente per acquistare questo agente.');
+    return;
+  }
+  if (!guidaAgenteCompratoMostrata) {
+    guidaAgenteCompratoMostrata = true;
+    showInstructionModal(
+      "Hai acquistato il tuo primo agente immobiliare. Ora potrai utilizzarlo per assegnare la vendita delle case e guadagnare commissioni.",
+      function() {
+        actuallyCompraAgente(idAgente, prezzoAgente);
+      }
+    );
+  } else {
+    actuallyCompraAgente(idAgente, prezzoAgente);
+  }
+}
+
+function actuallyCompraAgente(idAgente, prezzoAgente) {
+  saldo -= prezzoAgente;
+  displaySaldo.textContent = saldo.toFixed(2);
+  const agente = agentiDati.find(a => a.id === idAgente);
+  if (agente) {
+    agentiAcquistati.push({ ...agente, tempoRimanente: 0 });
+    alert(`Hai acquistato l'agente immobiliare ${agente.nome}. Ora puoi utilizzarlo per vendere case.`);
+  }
+}
+
+
+/* Vendita di una Porta */
+function vendiPorta(indice, prezzoVendita) {
+  if (!guidaVendiMostrata) {
+    guidaVendiMostrata = true;
+    showInstructionModal(
+      "Premi il pulsante <strong>VENDI</strong> per vendere la porta selezionata e realizzare un profitto.",
+      function() {
+        actuallyVendiPorta(indice, prezzoVendita);
+      }
+    );
+  } else {
+    actuallyVendiPorta(indice, prezzoVendita);
+  }
+}
+
+function actuallyVendiPorta(indice, prezzoVendita) {
+  if (indice < magazzino.length) {
+    saldo += prezzoVendita;
+    magazzino.splice(indice, 1);
+    displaySaldo.textContent = saldo.toFixed(2);
+    aggiornaLivello();
+    alert(`Hai venduto la porta per €${prezzoVendita.toFixed(2)}.`);
+    mostraMagazzino();
   }
 }

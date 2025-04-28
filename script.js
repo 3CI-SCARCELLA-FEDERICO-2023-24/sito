@@ -6,6 +6,17 @@ let magazzino = []; // Magazzino per le porte acquistate
 let venditaIncremento = 40; // Percentuale di incremento per la vendita
 let agentiAcquistati = []; // Lista di agenti immobiliari acquistati
 
+/* === INIZIALIZZAZIONE DELLE VARIABILI PER LE GUIDE === */
+let guidaPorteMostrata = false;
+let guidaCaseMostrata = false;
+let guidaAgentiMostrata = false;
+let guidaMagazzinoMostrata = false;
+
+let guidaPortaComprataMostrata = false;
+let guidaCasaComprataMostrata = false;
+
+let instructionCallback = null;
+
 // Riferimenti agli elementi del DOM
 const bottoneApriComputer = document.getElementById('apri-computer');
 const schermataComputer = document.getElementById('schermata-computer');
@@ -368,3 +379,224 @@ document.getElementById('modalOk').addEventListener('click', () => {
 
 // Imposta saldo iniziale
 displaySaldo.textContent = saldo.toFixed(2);
+
+/* === FUNZIONE PER MOSTRARE LA MODALE ISTRUTTIVA === */
+function showInstructionModal(message, callback) {
+  const modal = document.getElementById('infoModal');
+  modal.querySelector('.modal-content p').innerHTML = message;
+  instructionCallback = callback || null;
+  modal.style.display = 'block';
+}
+
+/* Modifica dell'event listener per il pulsante OK della modale */
+document.getElementById('modalOk').addEventListener('click', function() {
+  const modal = document.getElementById('infoModal');
+  modal.style.display = 'none';
+  if (instructionCallback) {
+    instructionCallback();
+    instructionCallback = null;
+  }
+});
+
+
+/* === WRAPPING DELLE FUNZIONI PER MOSTRARE LE SEZIONI CON GUIDA === */
+
+/* Sezione "Porte" */
+function mostraPorte() {
+  if (!guidaPorteMostrata) {
+    guidaPorteMostrata = true;
+    showInstructionModal(
+      "Premi il tasto <strong>ACQUISTA PORTE</strong> per acquistare delle porte e iniziare la tua prima vendita.",
+      function() {
+        actuallyShowPorte();
+      }
+    );
+  } else {
+    actuallyShowPorte();
+  }
+}
+
+function actuallyShowPorte() {
+  contenitorePc.innerHTML = '';
+  portaDati.forEach((porta) => {
+    const elementoPorta = document.createElement('div');
+    elementoPorta.classList.add('contenitore-porta');
+    elementoPorta.innerHTML = `
+      <img src="${porta.immagine}" alt="${porta.nome}">
+      <p>${porta.nome}</p>
+      <p>Prezzo: €${porta.prezzo}</p>
+      <button class="compra-btn" data-id="${porta.id}" data-prezzo="${porta.prezzo}">Compra</button>
+    `;
+    contenitorePc.appendChild(elementoPorta);
+  });
+  const compraBtns = document.querySelectorAll('.compra-btn');
+  compraBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idPorta = parseInt(btn.getAttribute('data-id'));
+      const prezzoPorta = parseFloat(btn.getAttribute('data-prezzo'));
+      compraPorta(idPorta, prezzoPorta);
+    });
+  });
+  inflazione(portaDati);
+}
+
+
+/* Sezione "Case" */
+function mostraCase() {
+  if (livello < 2) {
+    alert("Devi raggiungere il livello 2 per accedere alla sezione case.");
+    return;
+  }
+  if (!guidaCaseMostrata) {
+    guidaCaseMostrata = true;
+    showInstructionModal(
+      "Premi il tasto <strong>ACQUISTA CASE</strong> per acquistare una casa e avviare la vendita automatica.",
+      function() {
+        actuallyShowCase();
+      }
+    );
+  } else {
+    actuallyShowCase();
+  }
+}
+
+function actuallyShowCase() {
+  contenitorePc.innerHTML = '';
+  caseDati.forEach((casa) => {
+    const elementoCasa = document.createElement('div');
+    elementoCasa.classList.add('contenitore-porta');
+    elementoCasa.innerHTML = `
+      <img src="${casa.immagine}" alt="${casa.nome}">
+      <p>${casa.nome}</p>
+      <p>Prezzo: €${casa.prezzo}</p>
+      <button class="compra-casa-btn" data-id="${casa.id}" data-prezzo="${casa.prezzo}">Compra</button>
+    `;
+    contenitorePc.appendChild(elementoCasa);
+  });
+  const compraCasaBtns = document.querySelectorAll('.compra-casa-btn');
+  compraCasaBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idCasa = parseInt(btn.getAttribute('data-id'));
+      const prezzoCasa = parseFloat(btn.getAttribute('data-prezzo'));
+      compraCasa(idCasa, prezzoCasa);
+    });
+  });
+  inflazione(caseDati);
+}
+
+
+/* Sezione "Agenti Immobiliari" */
+function mostraAgenti() {
+  if (livello < 2) {
+    alert("Devi raggiungere il livello 2 per accedere alla sezione agenti immobiliari.");
+    return;
+  }
+  if (!guidaAgentiMostrata) {
+    guidaAgentiMostrata = true;
+    showInstructionModal(
+      "Premi il tasto <strong>COMPRA AGENTE</strong> per acquistare un agente immobiliare che ti aiuterà a vendere le case.",
+      function() {
+        actuallyShowAgenti();
+      }
+    );
+  } else {
+    actuallyShowAgenti();
+  }
+}
+
+function actuallyShowAgenti() {
+  contenitorePc.innerHTML = '';
+  // Visualizza prima gli agenti già acquistati (se presenti)
+  if (agentiAcquistati.length > 0) {
+    const titoloAcquistati = document.createElement('h3');
+    titoloAcquistati.textContent = 'Agenti Acquistati';
+    contenitorePc.appendChild(titoloAcquistati);
+    agentiAcquistati.forEach(agente => {
+      const elementoAgente = document.createElement('div');
+      elementoAgente.classList.add('contenitore-porta');
+      elementoAgente.innerHTML = `
+        <p>${agente.nome}</p>
+        <p>Professionalità: ${agente.professionalita}</p>
+        <p>Trattativa: ${agente.trattativa}</p>
+        <p>Commissione: ${agente.percentuale}%</p>
+        <div class="barra-progresso-container">
+          <div class="barra-progresso" id="progresso-${agente.id}" style="width: 0%;"></div>
+        </div>
+      `;
+      contenitorePc.appendChild(elementoAgente);
+      const barraProgresso = document.getElementById(`progresso-${agente.id}`);
+      aggiornaBarraProgresso(barraProgresso, agente.tempoRimanente);
+    });
+  }
+  // Visualizza poi gli agenti disponibili
+  const titoloDisponibili = document.createElement('h3');
+  titoloDisponibili.textContent = 'Agenti Disponibili';
+  contenitorePc.appendChild(titoloDisponibili);
+  agentiDati.forEach(agente => {
+    const elementoAgente = document.createElement('div');
+    elementoAgente.classList.add('contenitore-porta');
+    elementoAgente.innerHTML = `
+      <p>${agente.nome}</p>
+      <p>Prezzo: €${agente.prezzo}</p>
+      <p>Professionalità: ${agente.professionalita}</p>
+      <p>Trattativa: ${agente.trattativa}</p>
+      <p>Commissione: ${agente.percentuale}%</p>
+      <button class="compra-agente-btn" data-id="${agente.id}" data-prezzo="${agente.prezzo}">Compra Agente</button>
+    `;
+    contenitorePc.appendChild(elementoAgente);
+  });
+  const compraAgenteBtns = document.querySelectorAll('.compra-agente-btn');
+  compraAgenteBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idAgente = parseInt(btn.getAttribute('data-id'));
+      const prezzoAgente = parseFloat(btn.getAttribute('data-prezzo'));
+      compraAgente(idAgente, prezzoAgente);
+    });
+  });
+  inflazione(agentiDati);
+}
+
+
+/* Sezione "Magazzino" */
+function mostraMagazzino() {
+  if (!guidaMagazzinoMostrata) {
+    guidaMagazzinoMostrata = true;
+    showInstructionModal(
+      "Questo è il tuo <strong>MAGAZZINO</strong>. Qui troverai le porte acquistate e potrai venderle quando il loro prezzo cresce.",
+      function() {
+        actuallyShowMagazzino();
+      }
+    );
+  } else {
+    actuallyShowMagazzino();
+  }
+}
+
+function actuallyShowMagazzino() {
+  contenitorePc.innerHTML = '';
+  if (magazzino.length === 0) {
+    contenitorePc.innerHTML = '<p>Il magazzino è vuoto.</p>';
+  } else {
+    magazzino.forEach((item, indice) => {
+      const prezzoVendita = item.prezzo + (item.prezzo * venditaIncremento / 100);
+      const elementoItem = document.createElement('div');
+      elementoItem.classList.add('contenitore-porta');
+      elementoItem.innerHTML = `
+        <img src="${item.immagine}" alt="${item.nome}">
+        <p>${item.nome}</p>
+        <p>Prezzo originale: €${item.prezzo}</p>
+        <p>Prezzo di vendita: €${prezzoVendita.toFixed(2)}</p>
+        <button class="vendi-btn" data-indice="${indice}" data-vendita="${prezzoVendita}">Vendi</button>
+      `;
+      contenitorePc.appendChild(elementoItem);
+    });
+    const vendiBtns = document.querySelectorAll('.vendi-btn');
+    vendiBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const indice = parseInt(btn.getAttribute('data-indice'));
+        const prezzoVendita = parseFloat(btn.getAttribute('data-vendita'));
+        vendiPorta(indice, prezzoVendita);
+      });
+    });
+  }
+}

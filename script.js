@@ -679,6 +679,110 @@ function verificaBancarotta() {
   }
 }
 
+/* === INIZIALIZZAZIONE DELLE VARIABILI PER LE GUIDE === */
+let guidaPorteMostrata = false;
+let guidaCaseMostrata = false;
+let guidaAgentiMostrata = false;
+let guidaMagazzinoMostrata = false;
+
+let guidaPortaComprataMostrata = false;
+let guidaCasaComprataMostrata = false;
+let guidaAgenteCompratoMostrata = false;
+let guidaVendiMostrata = false;
+
+let instructionCallback = null;
+
+// Stile CSS per la bancarotta (iniettato dinamicamente)
+const styleBancarotta = `
+<style id="bancarotta-style">
+#bancarotta-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  color: white;
+}
+
+.bancarotta-container {
+  background-color: #2c3e50;
+  padding: 30px;
+  border-radius: 15px;
+  max-width: 600px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.bancarotta-container h1 {
+  color: #e74c3c;
+  margin-bottom: 20px;
+}
+
+.bancarotta-container h2, 
+.bancarotta-container h3 {
+  color: #3498db;
+  margin-top: 15px;
+}
+
+.bancarotta-container ul {
+  list-style-type: none;
+  padding: 0;
+  text-align: left;
+  margin: 0 auto;
+  max-width: 300px;
+}
+
+.bancarotta-container ul li {
+  background-color: #34495e;
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+#ricominciaGioco {
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+#ricominciaGioco:hover {
+  background-color: #27ae60;
+}
+
+.spiegazione-bancarotta {
+  text-align: left;
+  margin: 20px 0;
+}
+</style>
+`;
+
+// Funzione per verificare e gestire la bancarotta
+function verificaBancarotta() {
+  // Se non è già stato iniettato lo stile, iniettalo
+  if (!document.getElementById('bancarotta-style')) {
+    document.head.insertAdjacentHTML('beforeend', styleBancarotta);
+  }
+
+  // Controlla se non hai abbastanza soldi per acquistare neanche la porta più economica
+  const portaMinEconomica = portaDati[0]; // La prima porta nell'array (presumibilmente la più economica)
+  
+  if (saldo < portaMinEconomica.prezzo) {
+    // Se non hai soldi per acquistare nemmeno la porta più economica, sei in bancarotta
+    mostraPaginaBancarotta();
+  }
+}
+
 // Funzione per mostrare la pagina di bancarotta
 function mostraPaginaBancarotta() {
   // Nascondi la schermata del computer
@@ -735,10 +839,15 @@ function resetGioco() {
   if (bancarottaOverlay) {
     bancarottaOverlay.remove();
   }
+
+  // Rimuovi il CSS della bancarotta
+  const bancarottaStyle = document.getElementById('bancarotta-style');
+  if (bancarottaStyle) {
+    bancarottaStyle.remove();
+  }
 }
 
-// Aggiungi la chiamata a verificaBancarotta in punti chiave del gioco
-// Ad esempio, dopo ogni acquisto o vendita
+// Funzione per aggiungere la verifica bancarotta alle funzioni di acquisto/vendita
 function aggiungiVerificaBancarotta() {
   // Modifica le funzioni esistenti per chiamare verificaBancarotta
   const originalCompraPorta = compraPorta;
@@ -758,7 +867,98 @@ function aggiungiVerificaBancarotta() {
     originalCompraAgente(idAgente, prezzoAgente);
     verificaBancarotta();
   };
+
+  const originalVendiPorta = vendiPorta;
+  vendiPorta = function(indice, prezzoVendita) {
+    originalVendiPorta(indice, prezzoVendita);
+    verificaBancarotta();
+  };
 }
 
-// Chiama questa funzione all'avvio del gioco
+// Riferimenti agli elementi del DOM
+const bottoneApriComputer = document.getElementById('apri-computer');
+const schermataComputer = document.getElementById('schermata-computer');
+const pulsanteChiudi = document.getElementById('pulsante-chiudi');
+const displayLivello = document.getElementById('livello');
+const displaySaldo = document.getElementById('saldo');
+const bottoneMostraPorte = document.getElementById('mostra-porte');
+const bottoneMostraCase = document.getElementById('mostra-case');
+const bottoneMostraAgenti = document.getElementById('mostra-agenti');
+const bottoneMostraMagazzino = document.getElementById('mostra-magazzino');
+const contenitorePc = document.getElementById('schermo-pc');
+
+// Dati delle porte
+const portaDati = [
+  { id: 1, prezzo: 1000, immagine: 'images/immage/porta_inglese.png', nome: 'Porta inglese' },
+  { id: 2, prezzo: 3000, immagine: 'images/immage/porta_italiano.png', nome: 'Porta italiana' },
+  { id: 3, prezzo: 5000, immagine: 'images/immage/porta_moderna.png', nome: 'Porta moderna' },
+  { id: 4, prezzo: 7000, immagine: 'images/immage/porta_orientale.png', nome: 'Porta orientale' },
+  { id: 5, prezzo: 9000, immagine: 'images/immage/porta_gotica.png', nome: 'Porta gotica' },
+  { id: 6, prezzo: 12000, immagine: 'images/immage/porta_blindata.png', nome: 'Porta blindata' }
+];
+
+// Dati delle case
+const caseDati = [
+  { id: 1, prezzo: 20000, immagine: 'images/immage/casa_campagna.jpg', nome: 'Casa di campagna' },
+  { id: 2, prezzo: 30000, immagine: 'images/immage/casa_media.jpg', nome: 'Casa popolare' },
+  { id: 3, prezzo: 40000, immagine: 'images/immage/casa_moderna.jpg', nome: 'Casa moderna' }
+];
+
+// Dati degli agenti immobiliari
+const agentiDati = [
+  { id: 1, nome: 'Alberto', prezzo: 2000, professionalita: 80, trattativa: 70, percentuale: 10 },
+  { id: 2, nome: 'Carlo', prezzo: 3000, professionalita: 90, trattativa: 60, percentuale: 15 },
+  { id: 3, nome: 'Chiara', prezzo: 2500, professionalita: 75, trattativa: 80, percentuale: 12 }
+];
+
+// [Tutto il resto del codice precedente rimane invariato]
+
+// Funzione per aggiornare il livello in base al saldo
+function aggiornaLivello() {
+  if (saldo >= 100000) {
+    livello = 3;
+  } else if (saldo >= 10000) {
+    livello = 2;
+  } else {
+    livello = 1;
+  }
+  // Memorizza il livello massimo raggiunto
+  if (livello > livelloMassimo) {
+    livelloMassimo = livello;
+  }
+
+  // Imposta il livello attuale al massimo raggiunto
+  livello = livelloMassimo;
+
+  // Aggiorna la visualizzazione del livello
+  displayLivello.textContent = livello;
+}
+
+// Resto delle funzioni come nel codice originale...
+
+// Alla fine, chiama la funzione per aggiungere la verifica bancarotta
 aggiungiVerificaBancarotta();
+
+// Event listener per la schermata computer
+bottoneApriComputer.addEventListener('click', () => {
+  schermataComputer.classList.remove('nascosto');
+  // Mostra il modal informativo
+  document.getElementById('infoModal').style.display = 'block';
+});
+
+pulsanteChiudi.addEventListener('click', () => {
+  schermataComputer.classList.add('nascosto');
+});
+
+bottoneMostraPorte.addEventListener('click', mostraPorte);
+bottoneMostraCase.addEventListener('click', mostraCase);
+bottoneMostraAgenti.addEventListener('click', mostraAgenti);
+bottoneMostraMagazzino.addEventListener('click', mostraMagazzino);
+
+// Event listener per il pulsante OK del modal
+document.getElementById('modalOk').addEventListener('click', () => {
+  document.getElementById('infoModal').style.display = 'none';
+});
+
+// Imposta saldo iniziale
+displaySaldo.textContent = saldo.toFixed(2);

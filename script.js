@@ -345,7 +345,7 @@ function inflazione(dati) {
   // Salva i prezzi originali
   const prezziOriginali = dati.map(item => item.prezzo);
   // Funzione per generare un incremento casuale
-  const incrementoCasuale = () => Math.floor(Math.random() * 1000 + 1);
+  const incrementoCasuale = () => Math.floor(Math.random() * 300 + 1);
   // Aumenta il prezzo casualmente
   dati.forEach(item => {
     item.prezzo += incrementoCasuale();
@@ -357,7 +357,7 @@ function inflazione(dati) {
       item.prezzo = prezziOriginali[index];
     });
     console.log("Prezzi ripristinati:", dati);
-  }, Math.random() * 5000 + 2000); // Tempo di attesa casuale tra 2-7 secondi
+  }, Math.random() * 2000 + 500); // Tempo di attesa casuale tra 2-7 secondi
 }
 
 // Event listener per la schermata computer
@@ -404,7 +404,7 @@ document.getElementById('modalOk').addEventListener('click', function() {
 });
 
 
-/* === WRAPPING DELLE FUNZIONI PER MOSTRARE LE SEZIONI CON GUIDA === */
+/* WRAPPING DELLE FUNZIONI PER MOSTRARE LE SEZIONI CON GUIDA */
 
 /* Sezione "Porte" */
 function mostraPorte() {
@@ -605,7 +605,7 @@ function actuallyShowMagazzino() {
 }
 
 
-/* === WRAPPING DELLE FUNZIONI PER LE AZIONI SUI PULSANTI === */
+/* WRAPPING DELLE FUNZIONI PER LE AZIONI SUI PULSANTI */
 
 /* Acquisto di una Porta */
 /* La funzione "compraPorta" già esistente mostra il messaggio:

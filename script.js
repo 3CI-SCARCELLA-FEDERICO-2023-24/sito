@@ -668,3 +668,97 @@ function actuallyVendiPorta(indice, prezzoVendita) {
     mostraMagazzino();
   }
 }
+// Funzione per verificare la bancarotta
+function verificaBancarotta() {
+  // Controlla se non hai abbastanza soldi per acquistare neanche la porta più economica
+  const portaMinEconomica = portaDati[0]; // La prima porta nell'array (presumibilmente la più economica)
+  
+  if (saldo < portaMinEconomica.prezzo) {
+    // Se non hai soldi per acquistare nemmeno la porta più economica, sei in bancarotta
+    mostraPaginaBancarotta();
+  }
+}
+
+// Funzione per mostrare la pagina di bancarotta
+function mostraPaginaBancarotta() {
+  // Nascondi la schermata del computer
+  schermataComputer.classList.add('nascosto');
+  
+  // Crea un overlay per la schermata di bancarotta
+  const bancarottaOverlay = document.createElement('div');
+  bancarottaOverlay.id = 'bancarotta-overlay';
+  bancarottaOverlay.innerHTML = `
+    <div class="bancarotta-container">
+      <h1>Bancarotta!</h1>
+      <p>Purtroppo hai esaurito le tue risorse finanziarie.</p>
+      <div class="spiegazione-bancarotta">
+        <h2>Cos'è la Bancarotta?</h2>
+        <p>La bancarotta è una situazione finanziaria in cui un individuo o un'azienda non è più in grado di pagare i propri debiti o sostenere le proprie spese.</p>
+        
+        <h3>Perché capita?</h3>
+        <ul>
+          <li>Spese eccessive rispetto alle entrate</li>
+          <li>Investimenti non redditizi</li>
+          <li>Mancanza di gestione finanziaria</li>
+          <li>Improvvisi cali di reddito</li>
+        </ul>
+        
+        <h3>Cosa fare ora?</h3>
+        <p>Riparti dall'inizio! Impara dalla tua esperienza e migliora la tua strategia finanziaria.</p>
+      </div>
+      <button id="ricominciaGioco">Ricomincia da Capo</button>
+    </div>
+  `;
+  
+  // Aggiungi l'overlay al corpo del documento
+  document.body.appendChild(bancarottaOverlay);
+  
+  // Aggiungi event listener per ricominciare il gioco
+  document.getElementById('ricominciaGioco').addEventListener('click', resetGioco);
+}
+
+// Funzione per resettare il gioco
+function resetGioco() {
+  // Ripristina tutte le variabili iniziali
+  saldo = 2200;
+  livello = 1;
+  livelloMassimo = 1;
+  magazzino = [];
+  agentiAcquistati = [];
+  
+  // Aggiorna la visualizzazione
+  displaySaldo.textContent = saldo.toFixed(2);
+  displayLivello.textContent = livello;
+  
+  // Rimuovi l'overlay di bancarotta
+  const bancarottaOverlay = document.getElementById('bancarotta-overlay');
+  if (bancarottaOverlay) {
+    bancarottaOverlay.remove();
+  }
+}
+
+// Aggiungi la chiamata a verificaBancarotta in punti chiave del gioco
+// Ad esempio, dopo ogni acquisto o vendita
+function aggiungiVerificaBancarotta() {
+  // Modifica le funzioni esistenti per chiamare verificaBancarotta
+  const originalCompraPorta = compraPorta;
+  compraPorta = function(idPorta, prezzoPorta) {
+    originalCompraPorta(idPorta, prezzoPorta);
+    verificaBancarotta();
+  };
+
+  const originalCompraCasa = compraCasa;
+  compraCasa = function(idCasa, prezzoCasa) {
+    originalCompraCasa(idCasa, prezzoCasa);
+    verificaBancarotta();
+  };
+
+  const originalCompraAgente = compraAgente;
+  compraAgente = function(idAgente, prezzoAgente) {
+    originalCompraAgente(idAgente, prezzoAgente);
+    verificaBancarotta();
+  };
+}
+
+// Chiama questa funzione all'avvio del gioco
+aggiungiVerificaBancarotta();

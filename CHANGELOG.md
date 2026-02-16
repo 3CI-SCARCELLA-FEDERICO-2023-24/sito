@@ -1,0 +1,99 @@
+# Changelog
+
+Tutte le modifiche notevoli a questo progetto saranno documentate in questo file.
+
+Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/),
+e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/).
+
+## [1.0.0] - 2024-02-16
+
+### Aggiunto
+- Sistema completo di riconoscimento facciale
+- Interfaccia grafica PyQt6 con preview camera e gestione utenti
+- Rilevamento volti in tempo reale con MediaPipe
+- Generazione embeddings facciali con FaceNet
+- Database SQLite per gestione utenti e embeddings
+- Sistema di matching per confronto volti
+- Registrazione automatica volti sconosciuti
+- Gestione duplicati intelligente
+- Pannello di gestione utenti (aggiungi, elimina, visualizza)
+- Configurazioni personalizzabili
+- Supporto per camera preview con annotazioni
+- Sistema di confidence score per riconoscimenti
+- Documentazione completa (README, SETUP, QUICKSTART)
+- Script di installazione automatica per Windows
+- Script di test per verificare l'installazione
+- Licenza MIT
+- Linee guida per contribuire
+
+### Caratteristiche
+- Riconoscimento in tempo reale con bassa latenza
+- Supporto per riconoscimento con e senza occhiali
+- Interfaccia utente intuitiva e moderna
+- Database locale con privacy garantita
+- Performance ottimizzate per uso desktop
+- Cross-platform (Windows, Linux, macOS)
+
+### Tecnologie Utilizzate
+- Python 3.10+
+- PyQt6 per l'interfaccia grafica
+- OpenCV per elaborazione immagini
+- MediaPipe per rilevamento volti
+- FaceNet (PyTorch) per embeddings
+- SQLite per database
+- NumPy per calcoli numerici
+
+### File Creati
+- `main.py` - Entry point dell'applicazione
+- `config.py` - Configurazioni globali
+- `database/db_manager.py` - Gestione database SQLite
+- `face_recognition/face_detector.py` - Rilevamento volti
+- `face_recognition/face_encoder.py` - Generazione embeddings
+- `face_recognition/face_matcher.py` - Confronto volti
+- `ui/main_window.py` - Finestra principale
+- `ui/camera_preview.py` - Preview camera
+- `ui/management_panel.py` - Gestione utenti
+- `models/download_models.py` - Download modelli
+- `requirements.txt` - Dipendenze
+- `setup.py` - Setup script
+- `install_dependencies.bat` - Installazione Windows
+- `run.bat` - Esecuzione Windows
+- `test_installation.py` - Test installazione
+- `README.md` - Documentazione principale
+- `SETUP.md` - Guida installazione dettagliata
+- `QUICKSTART.md` - Guida rapida
+- `CONTRIBUTING.md` - Linee guida contribuzione
+- `CHANGELOG.md` - Questo file
+- `LICENSE` - Licenza MIT
+- `.gitignore` - File da escludere
+
+### Note di Sviluppo
+- Prima release stabile
+- Testato su Windows 10/11
+- Supporto sperimentale per Linux e macOS
+- Richiede webcam funzionante
+- Richiede almeno 4GB RAM
+
+---
+
+## [Unreleased]
+
+### Pianificato
+- Test automatizzati
+- Supporto database remoti
+- Temi UI personalizzabili
+- Esportazione/importazione database
+- Multi-lingua
+- Statistiche di utilizzo
+- Miglioramenti performance
+- Documentazione API
+
+---
+
+**Legenda:**
+- `Aggiunto` - Nuove funzionalità
+- `Modificato` - Modifiche a funzionalità esistenti
+- `Deprecato` - Funzionalità che saranno rimosse
+- `Rimosso` - Funzionalità rimosse
+- `Corretto` - Bug fix
+- `Sicurezza` - Correzioni di vulnerabilità

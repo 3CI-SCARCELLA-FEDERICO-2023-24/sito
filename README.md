@@ -9,6 +9,9 @@ Un'applicazione desktop completa per il riconoscimento facciale in tempo reale, 
 
 - **[Guida Rapida (QUICKSTART.md)](QUICKSTART.md)** - Inizia subito! ⚡
 - **[Guida Installazione (SETUP.md)](SETUP.md)** - Istruzioni dettagliate
+- **[Risoluzione Problemi (TROUBLESHOOTING.md)](TROUBLESHOOTING.md)** - Soluzioni ai problemi comuni
+- **[Contribuire (CONTRIBUTING.md)](CONTRIBUTING.md)** - Come contribuire al progetto
+- **[Changelog (CHANGELOG.md)](CHANGELOG.md)** - Storia delle versioni
 - **[Questo README](#)** - Panoramica completa
 
 ## 🎯 Caratteristiche Principali

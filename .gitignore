@@ -1,0 +1,58 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+
+# PyQt
+*.pyc
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# User data
+data/users/*
+!data/users/.gitkeep
+data/embeddings/*
+!data/embeddings/.gitkeep
+
+# Models (large files)
+models/*
+!models/.gitkeep
+!models/README.md
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

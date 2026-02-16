@@ -5,6 +5,12 @@ Un'applicazione desktop completa per il riconoscimento facciale in tempo reale, 
 ![Python Version](https://img.shields.io/badge/python-3.10+-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
+## 📚 Documentazione
+
+- **[Guida Rapida (QUICKSTART.md)](QUICKSTART.md)** - Inizia subito! ⚡
+- **[Guida Installazione (SETUP.md)](SETUP.md)** - Istruzioni dettagliate
+- **[Questo README](#)** - Panoramica completa
+
 ## 🎯 Caratteristiche Principali
 
 - **Riconoscimento Facciale in Tempo Reale**: Utilizza MediaPipe per il rilevamento dei volti e FaceNet per il riconoscimento
@@ -88,6 +94,45 @@ L'applicazione presenta:
    ```bash
    python main.py
    ```
+
+## 🏗️ Architettura
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     Main Window (PyQt6)                     │
+├──────────────────────────┬──────────────────────────────────┤
+│   Camera Preview         │    Management Panel              │
+│   ┌──────────────────┐   │   ┌──────────────────────────┐   │
+│   │  Live Camera     │   │   │  User List               │   │
+│   │  Feed            │   │   │  - User 1                │   │
+│   │                  │   │   │  - User 2                │   │
+│   │  ┌─────────┐     │   │   │  - User 3                │   │
+│   │  │ Face    │     │   │   └──────────────────────────┘   │
+│   │  │ Box     │     │   │   ┌──────────────────────────┐   │
+│   │  └─────────┘     │   │   │  Actions                 │   │
+│   │  Name: John      │   │   │  [Add] [Delete] [Refresh]│   │
+│   │  Conf: 95%       │   │   └──────────────────────────┘   │
+│   └──────────────────┘   │                                  │
+└──────────────────────────┴──────────────────────────────────┘
+         │                              │
+         ▼                              ▼
+┌─────────────────┐            ┌──────────────────┐
+│ Face Detection  │            │ Database Manager │
+│   (MediaPipe)   │            │    (SQLite)      │
+└────────┬────────┘            └────────┬─────────┘
+         │                              │
+         ▼                              │
+┌─────────────────┐                     │
+│ Face Encoding   │                     │
+│   (FaceNet)     │                     │
+└────────┬────────┘                     │
+         │                              │
+         ▼                              │
+┌─────────────────┐                     │
+│ Face Matching   │◄────────────────────┘
+│  (Embeddings)   │
+└─────────────────┘
+```
 
 ## 📚 Struttura del Progetto
 

@@ -1,10 +1,13 @@
 """Camera widget for displaying live video feed."""
 import cv2
 import numpy as np
+import logging
 from PyQt6.QtWidgets import QWidget, QLabel, QVBoxLayout
 from PyQt6.QtCore import QTimer, Qt, pyqtSignal
 from PyQt6.QtGui import QImage, QPixmap
 import config
+
+logger = logging.getLogger(__name__)
 
 
 class CameraWidget(QWidget):
@@ -24,6 +27,10 @@ class CameraWidget(QWidget):
         self.current_frame = None
         self.detected_faces = []
         self.face_labels = []
+        
+        # Initialize face detector once
+        from face_recognition import FaceDetector
+        self.face_detector = FaceDetector()
         
         self._init_ui()
         self._init_camera()
@@ -79,9 +86,7 @@ class CameraWidget(QWidget):
         """
         # Draw faces if any
         if self.detected_faces:
-            from face_recognition import FaceDetector
-            detector = FaceDetector()
-            detector.draw_faces(frame, self.detected_faces, self.face_labels)
+            self.face_detector.draw_faces(frame, self.detected_faces, self.face_labels)
         
         # Convert to QImage
         rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)

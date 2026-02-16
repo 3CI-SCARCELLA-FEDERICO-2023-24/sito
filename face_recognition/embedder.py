@@ -88,11 +88,19 @@ class FaceEmbedder:
         return model
     
     def _load_weights(self):
-        """Load pre-trained weights if available."""
-        # For simplicity, we'll initialize with random weights
-        # In production, you should download and load pre-trained weights
-        # from FACENET_MODEL_URL
-        pass
+        """Load pre-trained weights if available.
+        
+        WARNING: This implementation uses random weights for demonstration.
+        Face recognition will NOT work accurately without pre-trained weights.
+        See models/README.md for instructions on downloading proper weights.
+        """
+        import warnings
+        warnings.warn(
+            "FaceNet model is using random weights. "
+            "Face recognition accuracy will be poor. "
+            "Download pre-trained weights for production use.",
+            UserWarning
+        )
     
     def preprocess_face(self, face_img: np.ndarray) -> np.ndarray:
         """Preprocess face image for embedding generation.

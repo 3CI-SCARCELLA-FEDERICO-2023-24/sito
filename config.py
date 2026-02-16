@@ -25,7 +25,7 @@ MIN_TRACKING_CONFIDENCE = 0.5
 
 # Face recognition settings
 SIMILARITY_THRESHOLD = 0.6  # Lower = more strict matching
-EMBEDDING_SIZE = 512
+EMBEDDING_SIZE = 128  # FaceNet embedding dimension
 
 # UI settings
 WINDOW_WIDTH = 1200

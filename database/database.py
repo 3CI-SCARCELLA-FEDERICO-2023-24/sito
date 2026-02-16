@@ -1,8 +1,11 @@
 """SQLite database operations for user management."""
 import sqlite3
 import os
+import logging
 from typing import Optional, List, Tuple
 import config
+
+logger = logging.getLogger(__name__)
 
 
 class Database:
@@ -145,7 +148,11 @@ class Database:
             conn.commit()
             conn.close()
             return True
-        except Exception:
+        except sqlite3.Error as e:
+            logger.error(f"Database error updating user {user_id}: {e}")
+            return False
+        except Exception as e:
+            logger.error(f"Unexpected error updating user {user_id}: {e}")
             return False
     
     def delete_user(self, user_id: int) -> bool:
@@ -169,15 +176,26 @@ class Database:
                 
                 # Delete associated files
                 if foto_path and os.path.exists(foto_path):
-                    os.remove(foto_path)
+                    try:
+                        os.remove(foto_path)
+                    except OSError as e:
+                        logger.warning(f"Could not delete photo file {foto_path}: {e}")
+                        
                 if embedding_path and os.path.exists(embedding_path):
-                    os.remove(embedding_path)
+                    try:
+                        os.remove(embedding_path)
+                    except OSError as e:
+                        logger.warning(f"Could not delete embedding file {embedding_path}: {e}")
             
             cursor.execute('DELETE FROM users WHERE id = ?', (user_id,))
             conn.commit()
             conn.close()
             return True
-        except Exception:
+        except sqlite3.Error as e:
+            logger.error(f"Database error deleting user {user_id}: {e}")
+            return False
+        except Exception as e:
+            logger.error(f"Unexpected error deleting user {user_id}: {e}")
             return False
     
     def user_exists(self, nome: str, cognome: str) -> bool:

@@ -1,6 +1,7 @@
 """Main application window."""
 import os
 import time
+import logging
 import numpy as np
 from PyQt6.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, 
                             QLabel, QPushButton, QMessageBox, QApplication)
@@ -14,6 +15,8 @@ from ui.management_dialog import ManagementDialog
 from face_recognition import FaceDetector, FaceEmbedder, FaceMatcher
 from database import Database
 import config
+
+logger = logging.getLogger(__name__)
 
 
 class MainWindow(QMainWindow):
@@ -208,7 +211,7 @@ class MainWindow(QMainWindow):
                     self.known_embeddings.append(embedding)
                     self.known_user_ids.append(user_id)
                 except Exception as e:
-                    print(f"Error loading embedding for user {user_id}: {e}")
+                    logger.error(f"Error loading embedding for user {user_id}: {e}")
         
         self._update_stats()
     
@@ -243,7 +246,7 @@ class MainWindow(QMainWindow):
         try:
             embedding = self.embedder.generate_embedding(face_img)
         except Exception as e:
-            print(f"Error generating embedding: {e}")
+            logger.error(f"Error generating embedding: {e}")
             return
         
         # Match against known faces

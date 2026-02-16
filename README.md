@@ -4,12 +4,20 @@ Un'applicazione desktop completa per il riconoscimento facciale in tempo reale, 
 
 ![Python Version](https://img.shields.io/badge/python-3.10+-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
+![Security](https://img.shields.io/badge/security-patched-green.svg)
+![Version](https://img.shields.io/badge/version-1.0.1-blue.svg)
+
+## 🔒 Security Notice
+
+**Version 1.0.1** includes critical security updates. If you're using version 1.0.0, please update immediately.  
+See [SECURITY.md](SECURITY.md) for details.
 
 ## 📚 Documentazione
 
 - **[Guida Rapida (QUICKSTART.md)](QUICKSTART.md)** - Inizia subito! ⚡
 - **[Guida Installazione (SETUP.md)](SETUP.md)** - Istruzioni dettagliate
 - **[Risoluzione Problemi (TROUBLESHOOTING.md)](TROUBLESHOOTING.md)** - Soluzioni ai problemi comuni
+- **[Sicurezza (SECURITY.md)](SECURITY.md)** - Policy di sicurezza e aggiornamenti
 - **[Contribuire (CONTRIBUTING.md)](CONTRIBUTING.md)** - Come contribuire al progetto
 - **[Changelog (CHANGELOG.md)](CHANGELOG.md)** - Storia delle versioni
 - **[Questo README](#)** - Panoramica completa

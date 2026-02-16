@@ -5,6 +5,29 @@ Tutte le modifiche notevoli a questo progetto saranno documentate in questo file
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/),
 e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/).
 
+## [1.0.1] - 2024-02-16
+
+### Sicurezza
+- **CRITICO**: Aggiornato keras da 2.15.0 a >=3.12.0 per risolvere:
+  - Directory traversal vulnerability (CVE)
+  - Path traversal in keras.utils.get_file API
+  - Deserialization of untrusted data vulnerability
+  - Arbitrary code execution vulnerability
+- **CRITICO**: Aggiornato torch da 2.1.2 a >=2.6.0 per risolvere:
+  - Heap buffer overflow vulnerability
+  - Use-after-free vulnerability
+  - Remote code execution via torch.load
+  - Deserialization vulnerability
+- **ALTO**: Aggiornato Pillow da 10.2.0 a >=10.3.0 per risolvere:
+  - Buffer overflow vulnerability
+- Aggiornato tensorflow a >=2.16.0 per compatibilità con keras 3.x
+- Aggiornato torchvision a >=0.19.0 per compatibilità con torch 2.6+
+
+### Note di Aggiornamento
+- Gli utenti devono aggiornare le dipendenze eseguendo: `pip install -r requirements.txt --upgrade`
+- Tutte le vulnerabilità di sicurezza sono state risolte
+- La compatibilità dell'applicazione è stata mantenuta
+
 ## [1.0.0] - 2024-02-16
 
 ### Aggiunto

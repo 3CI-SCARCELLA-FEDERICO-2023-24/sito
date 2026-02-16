@@ -41,6 +41,10 @@ class CameraPreview(QWidget):
         # Cache per gli embeddings del database
         self.database_embeddings = []
         
+        # Debouncing per volti sconosciuti (evita popup multipli)
+        self.unknown_faces_cooldown = {}  # {embedding_hash: timestamp}
+        self.cooldown_seconds = 10  # Tempo minimo tra segnalazioni dello stesso volto
+        
         self._init_ui()
         self._init_camera()
     
@@ -159,8 +163,8 @@ class CameraPreview(QWidget):
                 labels.append(f"{nome} ({confidence_score:.0f}%)")
             else:
                 labels.append("Sconosciuto")
-                # Emetti segnale per volto sconosciuto
-                self.unknown_face_detected.emit(face_img, embedding)
+                # Emetti segnale per volto sconosciuto con debouncing
+                self._emit_unknown_face_with_debounce(face_img, embedding)
         
         # Disegna i volti rilevati
         annotated_frame = self.face_detector.draw_detections(frame, faces, labels)
@@ -198,6 +202,39 @@ class CameraPreview(QWidget):
         )
         
         self.video_label.setPixmap(scaled_pixmap)
+    
+    def _emit_unknown_face_with_debounce(self, face_img: np.ndarray, embedding: np.ndarray):
+        """
+        Emette il segnale per volto sconosciuto con debouncing.
+        
+        Args:
+            face_img: Immagine del volto
+            embedding: Embedding del volto
+        """
+        import time
+        
+        # Crea un hash dell'embedding per identificare lo stesso volto
+        # Usiamo una versione arrotondata per tollerare piccole variazioni
+        embedding_hash = hash(tuple(np.round(embedding, 2)))
+        
+        current_time = time.time()
+        
+        # Pulisci vecchie entry dal cooldown (più vecchie di 60 secondi)
+        old_keys = [k for k, v in self.unknown_faces_cooldown.items() 
+                    if current_time - v > 60]
+        for k in old_keys:
+            del self.unknown_faces_cooldown[k]
+        
+        # Controlla se questo volto è in cooldown
+        if embedding_hash in self.unknown_faces_cooldown:
+            last_time = self.unknown_faces_cooldown[embedding_hash]
+            if current_time - last_time < self.cooldown_seconds:
+                # Ancora in cooldown, non emettere segnale
+                return
+        
+        # Emetti segnale e aggiorna cooldown
+        self.unknown_face_detected.emit(face_img, embedding)
+        self.unknown_faces_cooldown[embedding_hash] = current_time
     
     def refresh_database(self):
         """Ricarica gli embeddings dal database."""

@@ -153,12 +153,22 @@ If you discover a security vulnerability, please follow these steps:
 - No remote code execution paths
 - Input validation throughout
 - Error handling prevents information leakage
+- Does not load external ML models
+- Does not use untrusted HDF5 files
+
+⚠️ **Known Issues**:
+- **Keras 3.13.1**: Arbitrary file read in HDF5 weight loading mechanism
+  - **Impact**: Low (application doesn't load external HDF5 models)
+  - **Affected**: >= 3.0.0, <= 3.13.1
+  - **Patch**: Not yet available
+  - **Mitigation**: Application uses only built-in FaceNet models from facenet-pytorch, no external HDF5 files
 
 ⚠️ **User Responsibility**:
 - Physical access to the computer = access to database
 - Database file should be protected at OS level
 - Camera access should be controlled
 - Users should verify unknown faces before registration
+- Do not load untrusted model files
 
 ### Future Enhancements
 
@@ -174,7 +184,7 @@ Planned security improvements:
 ### Pinned vs. Ranged Versions
 
 We use minimum version requirements (>=) for security-critical dependencies:
-- `keras>=3.12.0` - Ensures all security patches
+- `keras>=3.13.1` - Latest version with most security patches
 - `torch>=2.6.0` - Ensures all security patches
 - `Pillow>=10.3.0` - Ensures all security patches
 

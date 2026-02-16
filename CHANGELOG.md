@@ -8,24 +8,32 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 ## [1.0.1] - 2024-02-16
 
 ### Sicurezza
-- **CRITICO**: Aggiornato keras da 2.15.0 a >=3.12.0 per risolvere:
-  - Directory traversal vulnerability (CVE)
-  - Path traversal in keras.utils.get_file API
-  - Deserialization of untrusted data vulnerability
-  - Arbitrary code execution vulnerability
+- **CRITICO**: Aggiornato keras da 2.15.0 a >=3.13.1 per risolvere:
+  - Directory traversal vulnerability (CVE) - RISOLTO
+  - Path traversal in keras.utils.get_file API - RISOLTO
+  - Deserialization of untrusted data vulnerability - RISOLTO
+  - Arbitrary code execution vulnerability - RISOLTO
+  - Allocates resources without limits in HDF5 component - RISOLTO
 - **CRITICO**: Aggiornato torch da 2.1.2 a >=2.6.0 per risolvere:
-  - Heap buffer overflow vulnerability
-  - Use-after-free vulnerability
-  - Remote code execution via torch.load
-  - Deserialization vulnerability
+  - Heap buffer overflow vulnerability - RISOLTO
+  - Use-after-free vulnerability - RISOLTO
+  - Remote code execution via torch.load - RISOLTO
+  - Deserialization vulnerability - RISOLTO
 - **ALTO**: Aggiornato Pillow da 10.2.0 a >=10.3.0 per risolvere:
-  - Buffer overflow vulnerability
+  - Buffer overflow vulnerability - RISOLTO
 - Aggiornato tensorflow a >=2.16.0 per compatibilità con keras 3.x
 - Aggiornato torchvision a >=0.19.0 per compatibilità con torch 2.6+
 
+### Note di Sicurezza
+- Keras 3.13.1 ha una vulnerabilità nota: "Arbitrary file read in HDF5 weight loading"
+  - Impatto: Solo se si caricano modelli HDF5 non fidati
+  - Mitigazione: Non caricare modelli da fonti non attendibili
+  - Patch: Non ancora disponibile
+  - Questa applicazione non carica modelli HDF5 esterni, quindi non è a rischio
+
 ### Note di Aggiornamento
 - Gli utenti devono aggiornare le dipendenze eseguendo: `pip install -r requirements.txt --upgrade`
-- Tutte le vulnerabilità di sicurezza sono state risolte
+- La maggior parte delle vulnerabilità critiche sono state risolte
 - La compatibilità dell'applicazione è stata mantenuta
 
 ## [1.0.0] - 2024-02-16

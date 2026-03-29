@@ -1,0 +1,28 @@
+# GUI Framework
+PyQt6==6.6.1
+PyQt6-Qt6==6.6.1
+PyQt6-sip==13.6.0
+
+# Computer Vision
+opencv-python==4.9.0.80
+opencv-contrib-python==4.9.0.80
+
+# Face Detection and Recognition
+mediapipe==0.10.9
+deepface==0.0.90
+tensorflow==2.15.0
+tf-keras==2.15.0
+
+# Image Processing
+Pillow==10.2.0
+numpy==1.26.3
+
+# Database
+sqlite3; python_version >= '3.0'
+
+# Utilities
+requests==2.31.0
+gdown==4.7.1
+
+# Performance optimization (optional, for CUDA support)
+# tensorflow-gpu==2.15.0  # Uncomment if NVIDIA GPU with CUDA is available
